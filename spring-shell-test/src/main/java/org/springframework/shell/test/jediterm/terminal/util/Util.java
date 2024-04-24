@@ -58,7 +58,9 @@ public class Util {
 
   public static String trimTrailing(String string) {
     int index = string.length() - 1;
-    while (index >= 0 && Character.isWhitespace(string.charAt(index))) index--;
+      while (index >= 0 && Character.isWhitespace(string.charAt(index))) {
+          index--;
+      }
     return string.substring(0, index + 1);
   }
 
@@ -92,14 +94,16 @@ public class Util {
     for (int i = fromIndex; i <= max; i++) {
       /* Look for first character. */
       if (!charsEqualIgnoreCase(where.charAt(i), first)) {
-        while (++i <= max && !charsEqualIgnoreCase(where.charAt(i), first)) ;
+          while (++i <= max && !charsEqualIgnoreCase(where.charAt(i), first)) {
+          }
       }
 
       /* Found first character, now look at the rest of v2 */
       if (i <= max) {
         int j = i + 1;
         int end = j + targetCount - 1;
-        for (int k = 1; j < end && charsEqualIgnoreCase(where.charAt(j), what.charAt(k)); j++, k++) ;
+          for (int k = 1; j < end && charsEqualIgnoreCase(where.charAt(j), what.charAt(k)); j++, k++) {
+          }
 
         if (j == end) {
           /* Found whole string. */

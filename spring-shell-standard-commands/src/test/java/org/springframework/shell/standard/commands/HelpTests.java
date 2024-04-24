@@ -85,9 +85,8 @@ public class HelpTests {
 			this.testName = testMethod.get().getName();
 		}
 		Collection<CommandRegistration> regs = this.commandCatalog.getRegistrations().values();
-		regs.stream().forEach(r -> {
-			this.commandCatalog.unregister(r);
-		});
+		regs.stream().forEach(r ->
+			this.commandCatalog.unregister(r));
 	}
 
 	@Test

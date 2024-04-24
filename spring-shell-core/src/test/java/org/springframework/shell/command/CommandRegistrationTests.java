@@ -228,9 +228,8 @@ public class CommandRegistrationTests extends AbstractCommandTests {
 			.build();
 		assertThat(registration.getCommand()).isEqualTo("command1");
 		assertThat(registration.getOptions()).hasSize(1);
-		assertThat(registration.getOptions().get(0).getType()).satisfies(type -> {
-			assertThat(type).isEqualTo(rtype);
-		});
+		assertThat(registration.getOptions().get(0).getType()).satisfies(type ->
+			assertThat(type).isEqualTo(rtype));
 	}
 
 	@Test
@@ -482,9 +481,7 @@ public class CommandRegistrationTests extends AbstractCommandTests {
 			.command("command1")
 			.withOption()
 				.longNames("arg1")
-				.completion(ctx -> {
-					return new ArrayList<>();
-				})
+				.completion(ctx -> new ArrayList<>())
 				.and()
 			.withTarget()
 				.function(function1)

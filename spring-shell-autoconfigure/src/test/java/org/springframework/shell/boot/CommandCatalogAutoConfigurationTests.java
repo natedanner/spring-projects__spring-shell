@@ -41,13 +41,13 @@ public class CommandCatalogAutoConfigurationTests {
 
 	@Test
 	void defaultCommandCatalog() {
-		this.contextRunner.run((context) -> assertThat(context).hasSingleBean(CommandCatalog.class));
+		this.contextRunner.run(context -> assertThat(context).hasSingleBean(CommandCatalog.class));
 	}
 
 	@Test
 	void testCommandResolvers() {
 		this.contextRunner.withUserConfiguration(CustomCommandResolverConfiguration.class)
-				.run((context) -> {
+				.run(context -> {
 					CommandCatalog commandCatalog = context.getBean(CommandCatalog.class);
 					assertThat(commandCatalog).extracting("resolvers").asInstanceOf(InstanceOfAssertFactories.LIST)
 							.hasSize(1);
@@ -57,7 +57,7 @@ public class CommandCatalogAutoConfigurationTests {
 	@Test
 	void customCommandCatalog() {
 		this.contextRunner.withUserConfiguration(CustomCommandCatalogConfiguration.class)
-				.run((context) -> {
+				.run(context -> {
 					CommandCatalog commandCatalog = context.getBean(CommandCatalog.class);
 					assertThat(commandCatalog).isSameAs(CustomCommandCatalogConfiguration.testCommandCatalog);
 				});
@@ -66,7 +66,7 @@ public class CommandCatalogAutoConfigurationTests {
 	@Test
 	void registerCommandRegistration() {
 		this.contextRunner.withUserConfiguration(CustomCommandRegistrationConfiguration.class)
-				.run((context) -> {
+				.run(context -> {
 					CommandCatalog commandCatalog = context.getBean(CommandCatalog.class);
 					assertThat(commandCatalog.getRegistrations().get("customcommand")).isNotNull();
 				});
@@ -153,7 +153,7 @@ public class CommandCatalogAutoConfigurationTests {
 
 		@Bean
 		CommandResolver customCommandResolver() {
-			return () -> Collections.emptyList();
+			return Collections::emptyList;
 		}
 	}
 
@@ -176,9 +176,7 @@ public class CommandCatalogAutoConfigurationTests {
 			return CommandRegistration.builder()
 				.command("customcommand")
 				.withTarget()
-					.function(ctx -> {
-						return null;
-					})
+					.function(ctx -> null)
 					.and()
 				.build();
 		}

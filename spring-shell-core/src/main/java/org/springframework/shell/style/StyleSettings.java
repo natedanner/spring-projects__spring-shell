@@ -25,96 +25,96 @@ public abstract class StyleSettings {
 	/**
 	 * Represents some arbitrary {@code title}.
 	 */
-	public final static String TAG_TITLE = "style-title";
+	public static final String TAG_TITLE = "style-title";
 
 	/**
 	 * Represents some arbitrary {@code value}.
 	 */
-	public final static String TAG_VALUE = "style-value";
+	public static final String TAG_VALUE = "style-value";
 
 	/**
 	 * Styling for keys or names in a lists:
 	 * <list key1> : list value1
 	 * <list key2> : list value2
 	 */
-	public final static String TAG_LIST_KEY = "style-list-key";
+	public static final String TAG_LIST_KEY = "style-list-key";
 
 	/**
 	 * Styling for keys or names in a lists:
 	 * list key1 : <list value1>
 	 * list key2 : <list value2>
 	 */
-	public final static String TAG_LIST_VALUE = "style-list-value";
+	public static final String TAG_LIST_VALUE = "style-list-value";
 
 	/**
 	 * Styling for some arbitrary content indicating {@code INFO} level.
 	 */
-	public final static String TAG_LEVEL_INFO = "style-level-info";
+	public static final String TAG_LEVEL_INFO = "style-level-info";
 
 	/**
 	 * Styling for some arbitrary content indicating {@code WARN} level.
 	 */
-	public final static String TAG_LEVEL_WARN = "style-level-warn";
+	public static final String TAG_LEVEL_WARN = "style-level-warn";
 
 	/**
 	 * Styling for some arbitrary content indicating {@code ERROR} level.
 	 */
-	public final static String TAG_LEVEL_ERROR = "style-level-error";
+	public static final String TAG_LEVEL_ERROR = "style-level-error";
 
 	/**
 	 * Styling for something i.e. in selectors when item is selectable.
 	 */
-	public final static String TAG_ITEM_ENABLED = "style-item-enabled";
+	public static final String TAG_ITEM_ENABLED = "style-item-enabled";
 
 	/**
 	 * Styling for something i.e. in selectors when item can't be selected.
 	 */
-	public final static String TAG_ITEM_DISABLED = "style-item-disabled";
+	public static final String TAG_ITEM_DISABLED = "style-item-disabled";
 
 	/**
 	 * Styling for something i.e. in selectors when item is selected.
 	 */
-	public final static String TAG_ITEM_SELECTED = "style-item-selected";
+	public static final String TAG_ITEM_SELECTED = "style-item-selected";
 
 	/**
 	 * Styling for something i.e. in selectors when item is not selected.
 	 */
-	public final static String TAG_ITEM_UNSELECTED = "style-item-unselected";
+	public static final String TAG_ITEM_UNSELECTED = "style-item-unselected";
 
 	/**
 	 * Styling for selector i.e. arrow in selectors.
 	 */
-	public final static String TAG_ITEM_SELECTOR = "style-item-selector";
+	public static final String TAG_ITEM_SELECTOR = "style-item-selector";
 
 	/**
 	 * Styling for something which is highlighted.
 	 */
-	public final static String TAG_HIGHLIGHT = "style-highlight";
+	public static final String TAG_HIGHLIGHT = "style-highlight";
 
 	/**
 	 * Styling for something which has a background.
 	 */
-	public final static String TAG_BACKGROUND = "style-background";
+	public static final String TAG_BACKGROUND = "style-background";
 
 	/**
 	 * Styling for dialog background.
 	 */
-	public final static String TAG_DIALOG_BACKGROUND = "style-dialog-background";
+	public static final String TAG_DIALOG_BACKGROUND = "style-dialog-background";
 
 	/**
 	 * Styling for button background.
 	 */
-	public final static String TAG_BUTTON_BACKGROUND = "style-button-background";
+	public static final String TAG_BUTTON_BACKGROUND = "style-button-background";
 
 	/**
 	 * Styling for menubar background.
 	 */
-	public final static String TAG_MENUBAR_BACKGROUND = "style-menubar-background";
+	public static final String TAG_MENUBAR_BACKGROUND = "style-menubar-background";
 
 	/**
 	 * Styling for statusbar background.
 	 */
-	public final static String TAG_STATUSBAR_BACKGROUND = "style-statusbar-background";
+	public static final String TAG_STATUSBAR_BACKGROUND = "style-statusbar-background";
 
 	public String title() {
 		return "bold";

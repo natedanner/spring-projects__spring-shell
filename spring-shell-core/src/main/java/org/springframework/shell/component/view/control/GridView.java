@@ -43,8 +43,8 @@ import org.springframework.util.Assert;
  */
 public class GridView extends BoxView {
 
-	private final static Logger log = LoggerFactory.getLogger(GridView.class);
-	private List<GridItem> gridItems = new ArrayList<>();
+	private static final Logger log = LoggerFactory.getLogger(GridView.class);
+    private final List<GridItem> gridItems = new ArrayList<>();
 	private int[] columnSize;
 	private int[] rowSize;
 	private int minWidth;
@@ -240,7 +240,7 @@ public class GridView extends BoxView {
 
 	@Override
 	protected void initInternal() {
-		registerViewCommand(ViewCommand.NEXT_VIEW, () -> nextView());
+		registerViewCommand(ViewCommand.NEXT_VIEW, this::nextView);
 
 		registerKeyBinding(Key.Tab, ViewCommand.NEXT_VIEW);
 	}
@@ -443,8 +443,9 @@ public class GridView extends BoxView {
 			columnWidth[index] = columnAbs;
 		}
 
-		// Calculate row/column positions.
-		int columnX = 0, rowY = 0;
+        // Calculate row/column positions.
+        int columnX = 0;
+        int rowY = 0;
 		if (isShowBorders()) {
 			columnX++;
 			rowY++;
@@ -475,7 +476,8 @@ public class GridView extends BoxView {
 			GridItem item = entry.getValue();
 			int px = columnPos[item.column];
 			int py = rowPos[item.row];
-			int pw = 0, ph = 0;
+            int pw = 0;
+            int ph = 0;
 			for (int index = 0; index < item.height; index++) {
 				ph += rowHeight[item.row + index];
 			}
@@ -636,9 +638,12 @@ public class GridView extends BoxView {
 		int minGridHeight;
 		int minGridWidth;
 		boolean visible;
-		// The last position of the item relative to the top-left
-		// corner of the grid. Undefined if visible is false.
-		int x, y, w, h;
+        // The last position of the item relative to the top-left
+        // corner of the grid. Undefined if visible is false.
+        int x;
+        int y;
+        int w;
+        int h;
 
 		GridItem(View view, int row, int column, int width, int height, int minGridHeight, int minGridWidth,
 				boolean visible) {

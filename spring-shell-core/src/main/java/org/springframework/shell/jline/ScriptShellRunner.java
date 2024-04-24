@@ -61,10 +61,7 @@ public class ScriptShellRunner implements ShellRunner {
 	@Override
 	public boolean canRun(ApplicationArguments args) {
 		String[] sourceArgs = args.getSourceArgs();
-		if (sourceArgs.length > 0 && sourceArgs[0].startsWith("@") && sourceArgs[0].length() > 1) {
-			return true;
-		}
-		return false;
+        return sourceArgs.length > 0 && sourceArgs[0].startsWith("@") && sourceArgs[0].length() > 1;
 	}
 
 	//tag::documentation[]

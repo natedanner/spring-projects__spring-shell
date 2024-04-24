@@ -89,8 +89,12 @@ public class TextStyle {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 		TextStyle textStyle = (TextStyle) o;
 		return
 			// Objects.equals(myForeground, textStyle.myForeground) &&

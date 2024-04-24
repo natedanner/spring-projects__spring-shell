@@ -75,7 +75,7 @@ public class DialogView extends WindowView {
 	}
 
 	private void hookButtonEvents() {
-		buttons.forEach(b -> {
+		buttons.forEach(b ->
 			onDestroy(getEventLoop().viewEvents(ButtonViewSelectEvent.class, b)
 				.subscribe(event -> {
 					dispatch();
@@ -83,8 +83,7 @@ public class DialogView extends WindowView {
 					if (viewService != null) {
 						viewService.setModal(null);
 					}
-				}));
-		});
+				})));
 	}
 
 	@Override

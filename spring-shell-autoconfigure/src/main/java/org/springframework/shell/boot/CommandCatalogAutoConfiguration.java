@@ -48,22 +48,17 @@ public class CommandCatalogAutoConfiguration {
 			ShellContext shellContext) {
 		List<CommandResolver> resolvers = commandResolvers.orderedStream().collect(Collectors.toList());
 		CommandCatalog catalog = CommandCatalog.of(resolvers, shellContext);
-		methodTargetRegistrars.orderedStream().forEach(resolver -> {
-			resolver.register(catalog);
-		});
-		commandCatalogCustomizers.orderedStream().forEach(customizer -> {
-			customizer.customize(catalog);
-		});
+		methodTargetRegistrars.orderedStream().forEach(resolver ->
+			resolver.register(catalog));
+		commandCatalogCustomizers.orderedStream().forEach(customizer ->
+			customizer.customize(catalog));
 		return catalog;
 	}
 
 	@Bean
 	public CommandCatalogCustomizer defaultCommandCatalogCustomizer(ObjectProvider<CommandRegistration> commandRegistrations) {
-		return catalog -> {
-			commandRegistrations.orderedStream().forEach(registration -> {
-				catalog.register(registration);
-			});
-		};
+		return catalog ->
+			commandRegistrations.orderedStream().forEach(catalog::register);
 	}
 
 	@Bean
@@ -83,9 +78,8 @@ public class CommandCatalogAutoConfiguration {
 	@Bean
 	@ConditionalOnBean(OptionNameModifier.class)
 	public CommandRegistrationCustomizer customOptionNameModifierCommandRegistrationCustomizer(OptionNameModifier modifier) {
-		return builder -> {
+		return builder ->
 			builder.defaultOptionNameModifier(modifier);
-		};
 	}
 
 	@Bean
@@ -120,7 +114,7 @@ public class CommandCatalogAutoConfiguration {
 			ObjectProvider<CommandRegistrationCustomizer> customizerProvider) {
 		return () -> {
 			CommandRegistration.Builder builder = CommandRegistration.builder();
-			customizerProvider.orderedStream().forEach((customizer) -> customizer.customize(builder));
+			customizerProvider.orderedStream().forEach(customizer -> customizer.customize(builder));
 			return builder;
 		};
 	}

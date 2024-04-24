@@ -52,7 +52,7 @@ public interface TextCell<T> extends Cell<T> {
 	 * @return a default text cell
 	 */
 	static <T> TextCell<T> of(T item, Function<T, String> itemFunction) {
-		return new DefaultTextCell<T>(item, itemFunction);
+		return new DefaultTextCell<>(item, itemFunction);
 	}
 
 	/**
@@ -66,7 +66,7 @@ public interface TextCell<T> extends Cell<T> {
 	 * @return
 	 */
 	static <T> TextCell<T> of(T item, Function<T, String> itemFunction, HorizontalAlign hAlign, VerticalAlign vAlign) {
-		return new DefaultTextCell<T>(item, itemFunction, hAlign, vAlign);
+		return new DefaultTextCell<>(item, itemFunction, hAlign, vAlign);
 	}
 
 	static class DefaultTextCell<T> extends AbstractTextCell<T> {

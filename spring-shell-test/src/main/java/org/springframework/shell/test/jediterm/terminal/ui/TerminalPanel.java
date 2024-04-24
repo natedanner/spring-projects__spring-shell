@@ -32,17 +32,17 @@ public class TerminalPanel implements TerminalDisplay {
 
 	public static final double SCROLL_SPEED = 0.05;
 
-	protected int myCharSizeWidth = 0;
-	protected int myCharSizeHeight = 0;
+	protected int myCharSizeWidth;
+	protected int myCharSizeHeight;
 	protected int myTermSizeWidth = 80;
 	protected int myTermSizeHeight = 24;
-	private TerminalStarter myTerminalStarter = null;
+	private TerminalStarter myTerminalStarter;
 	// private TerminalSelection mySelection = null;
 	private TerminalPanelListener myTerminalPanelListener;
 	private final TerminalTextBuffer myTerminalTextBuffer;
 	protected int myClientScrollOrigin;
 	private String myWindowTitle = "Terminal";
-	private AtomicInteger scrollDy = new AtomicInteger(0);
+    private final AtomicInteger scrollDy = new AtomicInteger(0);
 	private TerminalCoordinates myCoordsAccessor;
 
 	public TerminalPanel(TerminalTextBuffer terminalTextBuffer, StyleState styleState) {
@@ -92,7 +92,7 @@ public class TerminalPanel implements TerminalDisplay {
 	}
 
 	public enum TerminalCursorState {
-		SHOWING, HIDDEN, NO_FOCUS;
+		SHOWING, HIDDEN, NO_FOCUS
 	}
 
 

@@ -24,7 +24,7 @@ public class StyleState {
 	private TextStyle myCurrentStyle = TextStyle.EMPTY;
 	private TextStyle myDefaultStyle = TextStyle.EMPTY;
 
-	private TextStyle myMergedStyle = null;
+	private TextStyle myMergedStyle;
 
 	public StyleState() {
 	}

@@ -61,7 +61,7 @@ import org.springframework.util.StringUtils;
  */
 public class TerminalUI implements ViewService {
 
-	private final static Logger log = LoggerFactory.getLogger(TerminalUI.class);
+	private static final Logger log = LoggerFactory.getLogger(TerminalUI.class);
 	private final Terminal terminal;
 	private final BindingReader bindingReader;
 	private final KeyMap<Integer> keyMap = new KeyMap<>();
@@ -72,8 +72,8 @@ public class TerminalUI implements ViewService {
 	private View modalView;
 	private boolean fullScreen;
 	private final KeyBinder keyBinder;
-	private DefaultEventLoop eventLoop = new DefaultEventLoop();
-	private View focus = null;
+    private final DefaultEventLoop eventLoop = new DefaultEventLoop();
+	private View focus;
 	private ThemeResolver themeResolver;
 	private String themeName = "default";
 
@@ -300,9 +300,8 @@ public class TerminalUI implements ViewService {
 
 	private void registerEventHandling() {
 		eventLoop.onDestroy(eventLoop.signalEvents()
-			.subscribe(event -> {
-				display();
-			}));
+			.subscribe(event ->
+				display()));
 
 		eventLoop.onDestroy(eventLoop.systemEvents()
 			.subscribe(event -> {
@@ -315,15 +314,11 @@ public class TerminalUI implements ViewService {
 			}));
 
 		eventLoop.onDestroy(eventLoop.keyEvents()
-			.doOnNext(m -> {
-				handleKeyEvent(m);
-			})
+			.doOnNext(this::handleKeyEvent)
 			.subscribe());
 
 		eventLoop.onDestroy(eventLoop.mouseEvents()
-			.doOnNext(m -> {
-				handleMouseEvent(m);
-			})
+			.doOnNext(this::handleMouseEvent)
 			.subscribe());
 	}
 

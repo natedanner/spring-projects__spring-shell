@@ -38,6 +38,7 @@ import org.springframework.shell.component.SingleItemSelector;
 import org.springframework.shell.component.SingleItemSelector.SingleItemSelectorContext;
 import org.springframework.shell.component.StringInput;
 import org.springframework.shell.component.StringInput.StringInputContext;
+import org.springframework.shell.component.support.Itemable;
 import org.springframework.shell.component.support.SelectorItem;
 import org.springframework.shell.standard.AbstractShellComponent;
 import org.springframework.shell.standard.ShellComponent;
@@ -110,7 +111,7 @@ public class ComponentCommands extends AbstractShellComponent {
 		List<SelectorItem<String>> items = new ArrayList<>();
 		items.add(SelectorItem.of("key1", "value1"));
 		items.add(SelectorItem.of("key2", "value2"));
-		if (longKeys != null && longKeys == true) {
+		if (longKeys != null && longKeys) {
 			items.add(SelectorItem.of("key3 long long long long long", "value3"));
 			items.add(SelectorItem.of("key4 long long long long long long long long long long", "value4"));
 		}
@@ -132,7 +133,7 @@ public class ComponentCommands extends AbstractShellComponent {
 		items.add(SelectorItem.of("key1", "value1"));
 		items.add(SelectorItem.of("key2", "value2", false, true));
 		items.add(SelectorItem.of("key3", "value3"));
-		if (longKeys != null && longKeys == true) {
+		if (longKeys != null && longKeys) {
 			items.add(SelectorItem.of("key4 long long long long long", "value4", false, true));
 			items.add(SelectorItem.of("key5 long long long long long long long long long long", "value5"));
 		}
@@ -143,7 +144,7 @@ public class ComponentCommands extends AbstractShellComponent {
 		MultiItemSelectorContext<String, SelectorItem<String>> context = component
 				.run(MultiItemSelectorContext.empty());
 		String result = context.getResultItems().stream()
-				.map(si -> si.getItem())
+				.map(Itemable::getItem)
 				.collect(Collectors.joining(","));
 		return "Got value " + result;
 	}

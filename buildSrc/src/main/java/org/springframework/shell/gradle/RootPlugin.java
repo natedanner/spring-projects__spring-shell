@@ -60,13 +60,10 @@ class RootPlugin implements Plugin<Project> {
 			});
 		});
 
-		project.getRootProject().getAllprojects().forEach(p -> {
+		project.getRootProject().getAllprojects().forEach(p ->
 			p.getPlugins().withType(AsciidoctorJPlugin.class, a -> {
-				p.getTasksByName("asciidoctor", false).forEach(t -> {
-					zipTask.dependsOn(t);
-				});;
-			});
-		});
+				p.getTasksByName("asciidoctor", false).forEach(zipTask::dependsOn);
+			}));
 
 		// since gradle 8.3 archives configuration started to fail
 		// so using custom configuration name
@@ -85,7 +82,7 @@ class RootPlugin implements Plugin<Project> {
 			options.addStringOption("Xdoclint:none", "-quiet");
 		});
 
-		project.getRootProject().getSubprojects().forEach(p -> {
+		project.getRootProject().getSubprojects().forEach(p ->
 			p.getPlugins().withType(ModulePlugin.class, m -> {
 				JavaPluginConvention java = p.getConvention().getPlugin(JavaPluginConvention.class);
 				SourceSet mainSourceSet = java.getSourceSets().getByName("main");
@@ -95,8 +92,7 @@ class RootPlugin implements Plugin<Project> {
 				p.getTasks().withType(Javadoc.class, j -> {
 					api.setClasspath(api.getClasspath().plus(j.getClasspath()));
 				});
-			});
-		});
+			}));
 		return api;
 	}
 }

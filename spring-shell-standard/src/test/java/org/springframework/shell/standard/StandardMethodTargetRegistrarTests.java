@@ -47,7 +47,7 @@ public class StandardMethodTargetRegistrarTests {
 	private AnnotationConfigApplicationContext applicationContext;
 	private CommandCatalog catalog;
 	private DefaultShellContext shellContext;
-	private CommandRegistration.BuilderSupplier builder = () -> CommandRegistration.builder();
+    private final CommandRegistration.BuilderSupplier builder = CommandRegistration::builder;
 
 	@BeforeEach
 	public void setup() {
@@ -510,11 +510,10 @@ public class StandardMethodTargetRegistrarTests {
 		registrar.register(catalog);
 
 		assertThat(catalog.getRegistrations().get("foo1")).isNotNull();
-		assertThat(catalog.getRegistrations().get("foo1")).satisfies(reg -> {
+		assertThat(catalog.getRegistrations().get("foo1")).satisfies(reg ->
 			assertThat(reg.getOptions().get(0)).satisfies(option -> {
 				assertThat(option.getType().getGeneric(0).getType()).isEqualTo(Pojo.class);
-			});
-		});
+			}));
 
 	}
 

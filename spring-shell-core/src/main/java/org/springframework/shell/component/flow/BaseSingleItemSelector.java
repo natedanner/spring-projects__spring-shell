@@ -41,13 +41,13 @@ public abstract class BaseSingleItemSelector extends BaseInput<SingleItemSelecto
 	private String name;
 	private String resultValue;
 	private ResultMode resultMode;
-	private List<SelectItem> selectItems = new ArrayList<>();
+    private final List<SelectItem> selectItems = new ArrayList<>();
 	private String defaultSelect;
 	private Comparator<SelectorItem<String>> comparator;
 	private Function<SingleItemSelectorContext<String, SelectorItem<String>>, List<AttributedString>> renderer;
 	private Integer maxItems;
-	private List<Consumer<SingleItemSelectorContext<String, SelectorItem<String>>>> preHandlers = new ArrayList<>();
-	private List<Consumer<SingleItemSelectorContext<String, SelectorItem<String>>>> postHandlers = new ArrayList<>();
+    private final List<Consumer<SingleItemSelectorContext<String, SelectorItem<String>>>> preHandlers = new ArrayList<>();
+    private final List<Consumer<SingleItemSelectorContext<String, SelectorItem<String>>>> postHandlers = new ArrayList<>();
 	private boolean storeResult = true;
 	private String templateLocation;
 	private Function<SingleItemSelectorContext<String, SelectorItem<String>>, String> next;

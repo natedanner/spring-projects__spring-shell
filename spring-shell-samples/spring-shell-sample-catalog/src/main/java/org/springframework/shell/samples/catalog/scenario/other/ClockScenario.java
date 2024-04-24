@@ -55,11 +55,10 @@ public class ClockScenario extends AbstractScenario {
 		// dispatch dates as messages
 		Flux<Message<?>> dates = Flux.interval(Duration.ofSeconds(1)).map(l -> {
 			String date = new Date().toString();
-			Message<String> message = MessageBuilder
+			return MessageBuilder
 				.withPayload(date)
 				.setHeader(ShellMessageHeaderAccessor.EVENT_TYPE, EventLoop.Type.USER)
 				.build();
-			return message;
 		});
 		getEventloop().dispatch(dates);
 
@@ -124,7 +123,7 @@ public class ClockScenario extends AbstractScenario {
 							.build();
 						getEventloop().dispatch(animStart);
 					}
-				};
+				}
 
 			}));
 

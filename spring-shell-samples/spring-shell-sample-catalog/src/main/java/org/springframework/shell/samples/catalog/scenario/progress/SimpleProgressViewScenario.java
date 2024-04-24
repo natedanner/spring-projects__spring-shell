@@ -70,31 +70,24 @@ public class SimpleProgressViewScenario extends AbstractScenario {
 
 		EventLoop eventLoop = getEventloop();
 
-		Flux<Message<?>> ticks = Flux.interval(Duration.ofMillis(500)).take(100).map(l -> {
-			Message<Long> message = MessageBuilder
+		Flux<Message<?>> ticks = Flux.interval(Duration.ofMillis(500)).take(100).map(l -> MessageBuilder
 				.withPayload(l)
 				.setHeader(ShellMessageHeaderAccessor.EVENT_TYPE, EventLoop.Type.USER)
 				.setHeader("SimpleProgressViewScenario", "")
-				.build();
-			return message;
-		});
+				.build());
 
 		eventLoop.dispatch(ticks);
 
 		eventLoop.onDestroy(eventLoop.events()
 			.filter(m -> EventLoop.Type.USER.equals(StaticShellMessageHeaderAccessor.getEventType(m))
 					&& m.getHeaders().containsKey("SimpleProgressViewScenario"))
-			.subscribe(m -> {
+			.subscribe(m ->
 				views.forEach(v -> {
 					v.tickAdvance(1);
-				});
-			}));
+				})));
 
-		Runnable stop = () -> {
-			views.forEach(v -> {
-				v.stop();
-			});
-		};
+		Runnable stop = () ->
+			views.forEach(ProgressView::stop);
 
 		return new ContextData(grid, views, null, stop);
 	}
@@ -106,13 +99,11 @@ public class SimpleProgressViewScenario extends AbstractScenario {
 	}
 
 	private ProgressView spinnerOnly() {
-		ProgressView view = new ProgressView(ProgressViewItem.ofSpinner());
-		return view;
+		return new ProgressView(ProgressViewItem.ofSpinner());
 	}
 
 	private ProgressView percentOnly() {
-		ProgressView view = new ProgressView(ProgressViewItem.ofPercent());
-		return view;
+		return new ProgressView(ProgressViewItem.ofPercent());
 	}
 
 	private ProgressView spreadAlign() {

@@ -64,9 +64,8 @@ public class MultiItemSelector<T, I extends Nameable & Matchable & Enableable & 
 			currentContext.setItems(getItems());
 		}
 		if (context != null) {
-			context.stream().forEach(e -> {
-				currentContext.put(e.getKey(), e.getValue());
-			});
+			context.stream().forEach(e ->
+				currentContext.put(e.getKey(), e.getValue()));
 		}
 		return currentContext;
 	}
@@ -116,7 +115,7 @@ public class MultiItemSelector<T, I extends Nameable & Matchable & Enableable & 
 	private static class DefaultMultiItemSelectorContext<T, I extends Nameable & Matchable & Itemable<T>> extends
 			BaseSelectorComponentContext<T, I, MultiItemSelectorContext<T, I>> implements MultiItemSelectorContext<T, I> {
 
-		private Function<T, String> itemMapper = item -> item.toString();
+		private Function<T, String> itemMapper = Object::toString;
 
 		DefaultMultiItemSelectorContext() {
 		}
@@ -131,7 +130,7 @@ public class MultiItemSelector<T, I extends Nameable & Matchable & Enableable & 
 				return Collections.emptyList();
 			}
 			return getResultItems().stream()
-					.map(i -> i.getItem())
+					.map(Itemable::getItem)
 					.map(i -> itemMapper.apply(i))
 					.collect(Collectors.toList());
 		}

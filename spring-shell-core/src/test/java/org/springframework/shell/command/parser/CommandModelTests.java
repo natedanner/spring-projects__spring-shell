@@ -110,12 +110,10 @@ class CommandModelTests extends AbstractParsingTests {
 			assertThat(root1.registration).isNull();
 			assertThat(root1.getValidTokens()).satisfies(map -> {
 				assertThat(map).hasSize(2);
-				assertThat(map).hasEntrySatisfying("sub1", token -> {
-					assertThat(token.getType()).isEqualTo(TokenType.COMMAND);
-				});
-				assertThat(map).hasEntrySatisfying("sub2", token -> {
-					assertThat(token.getType()).isEqualTo(TokenType.COMMAND);
-				});
+				assertThat(map).hasEntrySatisfying("sub1", token ->
+					assertThat(token.getType()).isEqualTo(TokenType.COMMAND));
+				assertThat(map).hasEntrySatisfying("sub2", token ->
+					assertThat(token.getType()).isEqualTo(TokenType.COMMAND));
 			});
 			assertThat(root1.getChildren()).satisfiesExactlyInAnyOrder(
 				sub1 -> {
@@ -155,23 +153,19 @@ class CommandModelTests extends AbstractParsingTests {
 			assertThat(root1.registration).isNull();
 			assertThat(root1.getValidTokens()).satisfies(map -> {
 				assertThat(map).hasSize(1);
-				assertThat(map).hasEntrySatisfying("sub1", token -> {
-					assertThat(token.getType()).isEqualTo(TokenType.COMMAND);
-				});
+				assertThat(map).hasEntrySatisfying("sub1", token ->
+					assertThat(token.getType()).isEqualTo(TokenType.COMMAND));
 			});
 			assertThat(root1.getChildren()).satisfiesExactlyInAnyOrder(
 				sub1 -> {
 					assertThat(sub1.command).isEqualTo("sub1");
 					assertThat(sub1.getChildren()).satisfiesExactlyInAnyOrder(
-						sub2 -> {
-							assertThat(sub2.getChildren()).isEmpty();
-						},
-						sub3 -> {
-							assertThat(sub3.getChildren()).isEmpty();
-						},
-						sub4 -> {
-							assertThat(sub4.getChildren()).isEmpty();
-						}
+						sub2 ->
+							assertThat(sub2.getChildren()).isEmpty(),
+						sub3 ->
+							assertThat(sub3.getChildren()).isEmpty(),
+						sub4 ->
+							assertThat(sub4.getChildren()).isEmpty()
 					);
 					// assertThat(sub1).isNotNull();
 					// assertThat(sub1.getChildren()).isEmpty();
@@ -196,9 +190,8 @@ class CommandModelTests extends AbstractParsingTests {
 		CommandModel model = commandModel();
 
 		assertThat(model.resolve(Arrays.asList("root2"))).satisfies(
-			info -> {
-				assertThat(info.registration).isNotNull();
-			}
+			info ->
+				assertThat(info.registration).isNotNull()
 		);
 	}
 }

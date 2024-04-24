@@ -51,7 +51,7 @@ class SamplePlugin implements Plugin<Project> {
 
 	private void configureBootJar(Project project) {
 		if (isEnabled(project, E2E)) {
-			project.getTasks().withType(BootJar.class, (bootJar) -> {
+			project.getTasks().withType(BootJar.class, bootJar -> {
 				String name = String.format("%s.%s", bootJar.getArchiveBaseName().get(),
 						bootJar.getArchiveExtension().get());
 				bootJar.getArchiveFileName().set(name);
@@ -67,9 +67,8 @@ class SamplePlugin implements Plugin<Project> {
 	}
 
 	private void customizeNative(Project project) {
-		project.getPlugins().withType(NativeImagePlugin.class).all(nativePlugin -> {
-			configureGraalVmExtension(project);
-		});
+		project.getPlugins().withType(NativeImagePlugin.class).all(nativePlugin ->
+			configureGraalVmExtension(project));
 	}
 
 	private void configureGraalVmExtension(Project project) {

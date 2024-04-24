@@ -132,9 +132,8 @@ public interface CommandCatalog {
 			Map<String, CommandRegistration> regs = new HashMap<>();
 			regs.putAll(commandRegistrations);
 			for (CommandResolver resolver : resolvers) {
-				resolver.resolve().stream().forEach(r -> {
-					regs.put(r.getCommand(), r);
-				});
+				resolver.resolve().stream().forEach(r ->
+					regs.put(r.getCommand(), r));
 			}
 			return regs.entrySet().stream()
 				.filter(filterByInteractionMode(shellContext))

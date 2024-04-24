@@ -39,10 +39,9 @@ public class ParameterValidationExceptionResultHandler
 		terminal.writer().println(new AttributedString("The following constraints were not met:",
 				AttributedStyle.DEFAULT.foreground(AttributedStyle.RED)).toAnsi());
 		result.getConstraintViolations().stream()
-				.forEach(v -> {
+				.forEach(v ->
 					terminal.writer().println(new AttributedString(v.toString(),
-						AttributedStyle.DEFAULT.foreground(AttributedStyle.RED)).toAnsi(terminal));
-				});
+						AttributedStyle.DEFAULT.foreground(AttributedStyle.RED)).toAnsi(terminal)));
 	}
 
 }

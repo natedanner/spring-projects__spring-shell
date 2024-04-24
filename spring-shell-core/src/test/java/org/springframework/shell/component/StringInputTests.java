@@ -176,9 +176,8 @@ public class StringInputTests extends AbstractShellTests {
 		component2.setResourceLoader(new DefaultResourceLoader());
 		component2.setTemplateExecutor(getTemplateExecutor());
 
-		component1.addPostRunHandler(context -> {
-			context.put("component1ResultValue", context.getResultValue());
-		});
+		component1.addPostRunHandler(context ->
+			context.put("component1ResultValue", context.getResultValue()));
 
 		component2.addPreRunHandler(context -> {
 			String component1ResultValue = context.get("component1ResultValue");

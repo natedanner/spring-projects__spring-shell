@@ -69,9 +69,7 @@ public class AliasCommands {
 					.command(REG, "aliasfor-1")
 					.and()
 				.withTarget()
-					.function(ctx -> {
-						return "Hello from alias command";
-					})
+					.function(ctx -> "Hello from alias command")
 					.and()
 				.build();
 		}
@@ -88,9 +86,7 @@ public class AliasCommands {
 					.command(REG, "alias2for-2")
 					.and()
 				.withTarget()
-					.function(ctx -> {
-						return "Hello from alias command";
-					})
+					.function(ctx -> "Hello from alias command")
 					.and()
 				.build();
 		}
@@ -104,9 +100,7 @@ public class AliasCommands {
 					.command(REG, "alias-32 alias-33")
 					.and()
 				.withTarget()
-					.function(ctx -> {
-						return "Hello from alias3 command";
-					})
+					.function(ctx -> "Hello from alias3 command")
 					.and()
 				.build();
 		}

@@ -24,7 +24,7 @@ public abstract class TerminalLineIntervalHighlighting {
 	private final TerminalLine myLine;
 	private final int myStartOffset;
 	private final int myEndOffset;
-	private boolean myDisposed = false;
+	private boolean myDisposed;
 
 	TerminalLineIntervalHighlighting( TerminalLine line, int startOffset, int length) {
 		if (startOffset < 0) {

@@ -46,16 +46,14 @@ class TestingSnippets {
 					.interactive()
 					.run();
 
-			await().atMost(2, TimeUnit.SECONDS).untilAsserted(() -> {
+			await().atMost(2, TimeUnit.SECONDS).untilAsserted(() ->
 				ShellAssertions.assertThat(session.screen())
-					.containsText("shell");
-			});
+					.containsText("shell"));
 
 			session.write(session.writeSequence().text("help").carriageReturn().build());
-			await().atMost(2, TimeUnit.SECONDS).untilAsserted(() -> {
+			await().atMost(2, TimeUnit.SECONDS).untilAsserted(() ->
 				ShellAssertions.assertThat(session.screen())
-					.containsText("AVAILABLE COMMANDS");
-			});
+					.containsText("AVAILABLE COMMANDS"));
 		}
 	}
 	// end::testing-shelltest-interactive[]
@@ -74,10 +72,9 @@ class TestingSnippets {
 				.nonInterative("help")
 				.run();
 
-			await().atMost(2, TimeUnit.SECONDS).untilAsserted(() -> {
+			await().atMost(2, TimeUnit.SECONDS).untilAsserted(() ->
 				ShellAssertions.assertThat(session.screen())
-					.containsText("AVAILABLE COMMANDS");
-			});
+					.containsText("AVAILABLE COMMANDS"));
 		}
 	}
 	// end::testing-shelltest-noninteractive[]

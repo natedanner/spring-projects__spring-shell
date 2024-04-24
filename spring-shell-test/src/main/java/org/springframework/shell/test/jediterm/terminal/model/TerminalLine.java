@@ -34,7 +34,7 @@ public final class TerminalLine {
 	private static final Logger LOG = LoggerFactory.getLogger(TerminalLine.class);
 
 	private TextEntries myTextEntries = new TextEntries();
-	private boolean myWrapped = false;
+	private boolean myWrapped;
 	private final List<TerminalLineIntervalHighlighting> myCustomHighlightings = new ArrayList<>();
 	TerminalLine myTypeAheadLine;
 
@@ -219,7 +219,7 @@ public final class TerminalLine {
 				newEntries.add(new TextEntry(entry.getStyle(), entry.getText().subBuffer(dx + remaining, len - (dx + remaining))));
 				remaining = 0;
 			} else {
-				remaining -= (len - dx);
+				remaining -= len - dx;
 				p = x;
 			}
 		}
@@ -336,7 +336,9 @@ public final class TerminalLine {
 		}
 		for (int i = startTextOffsetInd; i < endTextOffsetInd; i++) {
 			int length = offsets[i + 1] - offsets[i];
-			if (length == 0) continue;
+            if (length == 0) {
+                continue;
+            }
 			CharBuffer subText = new SubCharBuffer(text, offsets[i] - startTextOffset, length);
 			if (highlighting.intersectsWith(offsets[i], offsets[i + 1])) {
 				consumer.consume(offsets[i], y, highlighting.mergeWith(te.getStyle()), subText, startRow);
@@ -428,7 +430,7 @@ public final class TerminalLine {
 	private static class TextEntries implements Iterable<TextEntry> {
 		private final List<TextEntry> myTextEntries = new ArrayList<>();
 
-		private int myLength = 0;
+		private int myLength;
 
 		public void add(TextEntry entry) {
 			// NUL can only be at the end of the line

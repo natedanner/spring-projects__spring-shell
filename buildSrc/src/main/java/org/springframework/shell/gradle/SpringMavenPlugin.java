@@ -62,14 +62,14 @@ public class SpringMavenPlugin implements Plugin<Project> {
 	private void customizeMavenPublication(MavenPublication publication, Project project) {
 		customizePom(publication.getPom(), project);
 		project.getPlugins().withType(JavaPlugin.class)
-				.all((javaPlugin) -> customizeJavaMavenPublication(publication, project));
+				.all(javaPlugin -> customizeJavaMavenPublication(publication, project));
 	}
 
 	private void customizeJavaMavenPublication(MavenPublication publication, Project project) {
-		publication.versionMapping((strategy) -> strategy.usage(Usage.JAVA_API, (mappingStrategy) -> mappingStrategy
+		publication.versionMapping(strategy -> strategy.usage(Usage.JAVA_API, mappingStrategy -> mappingStrategy
 				.fromResolutionOf(JavaPlugin.RUNTIME_CLASSPATH_CONFIGURATION_NAME)));
 		publication.versionMapping(
-				(strategy) -> strategy.usage(Usage.JAVA_RUNTIME, VariantVersionMappingStrategy::fromResolutionResult));
+				strategy -> strategy.usage(Usage.JAVA_RUNTIME, VariantVersionMappingStrategy::fromResolutionResult));
 	}
 
 	private void customizePom(MavenPom pom, Project project) {
@@ -85,7 +85,7 @@ public class SpringMavenPlugin implements Plugin<Project> {
 		// TODO: find something better not to add dependencyManagement in pom
 		//       which result spring-shell-management in it. spring-shell-dependencies
 		//       has its own dependencyManagement which we need to keep
-		if (!project.getName().equals("spring-shell-dependencies")) {
+		if (!"spring-shell-dependencies".equals(project.getName())) {
 			pom.withXml(xxx -> {
 				Node pomNode = xxx.asNode();
 				List<?> childs = pomNode.children();
@@ -93,7 +93,7 @@ public class SpringMavenPlugin implements Plugin<Project> {
 				while (iter.hasNext()) {
 					Object next = iter.next();
 					if (next instanceof Node) {
-						if (((Node)next).name().toString().equals("{http://maven.apache.org/POM/4.0.0}dependencyManagement")) {
+						if ("{http://maven.apache.org/POM/4.0.0}dependencyManagement".equals(((Node)next).name().toString())) {
 							iter.remove();
 						}
 					}
@@ -115,7 +115,7 @@ public class SpringMavenPlugin implements Plugin<Project> {
 	}
 
 	private void customizeDevelopers(MavenPomDeveloperSpec developers) {
-		developers.developer((developer) -> {
+		developers.developer(developer -> {
 			developer.getName().set("Pivotal");
 			developer.getEmail().set("info@pivotal.io");
 			developer.getOrganization().set("Pivotal Software, Inc.");

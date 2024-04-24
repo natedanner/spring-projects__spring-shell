@@ -36,12 +36,10 @@ class BomPlugin implements Plugin<Project> {
 		// bom should have main shell modules and starters
 		DependencyConstraintHandler constraints = project.getDependencies().getConstraints();
 		project.getRootProject().getAllprojects().forEach(p -> {
-			p.getPlugins().withType(ModulePlugin.class, m -> {
-				constraints.add("api", p);
-			});
-			p.getPlugins().withType(StarterPlugin.class, m -> {
-				constraints.add("api", p);
-			});
+			p.getPlugins().withType(ModulePlugin.class, m ->
+				constraints.add("api", p));
+			p.getPlugins().withType(StarterPlugin.class, m ->
+				constraints.add("api", p));
 		});
 	}
 }

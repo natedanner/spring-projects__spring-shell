@@ -45,7 +45,7 @@ public class ViewComponentExecutor implements AutoCloseable {
 		this.executor.close();
 	}
 
-	private static class FutureViewComponentRun implements ViewComponentRun {
+    private static final class FutureViewComponentRun implements ViewComponentRun {
 
 		private Future<?> future;
 

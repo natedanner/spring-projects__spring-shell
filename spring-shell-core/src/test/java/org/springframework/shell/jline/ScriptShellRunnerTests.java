@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ScriptShellRunnerTests {
 
-	private ScriptShellRunner runner = new ScriptShellRunner(null, null);
+    private final ScriptShellRunner runner = new ScriptShellRunner(null, null);
 
 	@Test
 	void shouldNotRunWhenNoArgs() {

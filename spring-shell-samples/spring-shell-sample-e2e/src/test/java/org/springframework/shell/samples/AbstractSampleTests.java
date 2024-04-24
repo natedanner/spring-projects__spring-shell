@@ -41,9 +41,8 @@ public class AbstractSampleTests {
 	protected ShellTestClient client;
 
 	protected void assertScreenContainsText(BaseShellSession<?> session, String text) {
-		await().atMost(2, TimeUnit.SECONDS).untilAsserted(() -> {
-			ShellAssertions.assertThat(session.screen()).containsText(text);
-		});
+		await().atMost(2, TimeUnit.SECONDS).untilAsserted(() ->
+			ShellAssertions.assertThat(session.screen()).containsText(text));
 	}
 
 	protected void assertScreenNotContainsText(BaseShellSession<?> session, String textFound, String textNotFound) {
@@ -65,8 +64,7 @@ public class AbstractSampleTests {
 		}
 		else {
 			String[] commands = command.split(" ");
-			NonInteractiveShellSession session = client.nonInterative(commands).run();
-			return session;
+			return client.nonInterative(commands).run();
 		}
 	}
 }

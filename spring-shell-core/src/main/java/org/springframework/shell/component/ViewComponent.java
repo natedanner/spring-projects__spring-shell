@@ -35,13 +35,13 @@ import org.springframework.util.Assert;
  */
 public class ViewComponent {
 
-	private final static Logger log = LoggerFactory.getLogger(ViewComponent.class);
+	private static final Logger log = LoggerFactory.getLogger(ViewComponent.class);
 	private final Terminal terminal;
 	private final View view;
-	private EventLoop eventLoop;
-	private TerminalUI terminalUI;
+    private final EventLoop eventLoop;
+    private final TerminalUI terminalUI;
 	private boolean useTerminalWidth = true;
-	private ViewComponentExecutor viewComponentExecutor;
+    private final ViewComponentExecutor viewComponentExecutor;
 
 	/**
 	 * Construct view component with a given {@link Terminal} and {@link View}.
@@ -69,10 +69,7 @@ public class ViewComponent {
 	 * @return run state
 	 */
 	public ViewComponentRun runAsync() {
-		ViewComponentRun run = viewComponentExecutor.start(() -> {
-			runBlocking();
-		});
-		return run;
+		return viewComponentExecutor.start(this::runBlocking);
 	}
 
 	/**
@@ -81,9 +78,8 @@ public class ViewComponent {
 	public void runBlocking() {
 		log.debug("Start run()");
 		eventLoop.onDestroy(eventLoop.viewEvents(ViewDoneEvent.class, view)
-			.subscribe(event -> {
-					exit();
-				}
+			.subscribe(event ->
+					exit()
 			));
 		view.setEventLoop(eventLoop);
 		Size terminalSize = terminal.getSize();

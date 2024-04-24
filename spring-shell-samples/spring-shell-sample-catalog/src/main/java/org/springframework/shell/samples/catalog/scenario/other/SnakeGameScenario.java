@@ -136,7 +136,8 @@ public class SnakeGameScenario extends AbstractScenario {
 	}
 
 	private static class Cell {
-		final int row, col;
+        final int row;
+        final int col;
 		// 0 - empty, > 0 - snake, < 0 - food
 		int type;
 
@@ -148,7 +149,8 @@ public class SnakeGameScenario extends AbstractScenario {
 	}
 
 	private static class Board {
-		final int rows, cols;
+        final int rows;
+        final int cols;
 		Cell[][] cells;
 
 		Board(int rows, int cols, Cell initial) {
@@ -165,12 +167,14 @@ public class SnakeGameScenario extends AbstractScenario {
 		}
 
 		void food() {
-			int row = 0, column = 0;
+            int row = 0;
+            int column = 0;
 			while (true) {
 				row = (int) (Math.random() * rows);
 				column = (int) (Math.random() * cols);
-				if (cells[row][column].type != 1)
-					break;
+                if (cells[row][column].type != 1) {
+                    break;
+                }
 			}
 			cells[row][column].type = -1;
 		}

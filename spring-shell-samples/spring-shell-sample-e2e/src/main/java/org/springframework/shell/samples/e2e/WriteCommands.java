@@ -84,9 +84,8 @@ public class WriteCommands {
 				.command(REG, "write-terminalwriter")
 				.group(GROUP)
 				.withTarget()
-					.consumer(ctx -> {
-						System.out.println("hi");
-					})
+					.consumer(ctx ->
+						System.out.println("hi"))
 					.and()
 				.build();
 		}

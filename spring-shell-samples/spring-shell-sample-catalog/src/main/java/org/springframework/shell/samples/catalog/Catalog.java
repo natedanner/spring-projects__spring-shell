@@ -70,23 +70,23 @@ import org.springframework.util.StringUtils;
 public class Catalog {
 
 	// ref types helping with deep nested generics from events
-	private final static ParameterizedTypeReference<ListViewOpenSelectedItemEvent<ScenarioData>> LISTVIEW_SCENARIO_TYPEREF
-		= new ParameterizedTypeReference<ListViewOpenSelectedItemEvent<ScenarioData>>() {};
-	private final static ParameterizedTypeReference<ListViewSelectedItemChangedEvent<String>> LISTVIEW_STRING_TYPEREF
-		= new ParameterizedTypeReference<ListViewSelectedItemChangedEvent<String>>() {};
-	private final static Logger log = LoggerFactory.getLogger(Catalog.class);
+	private static final ParameterizedTypeReference<ListViewOpenSelectedItemEvent<ScenarioData>> LISTVIEW_SCENARIO_TYPEREF
+		= new ParameterizedTypeReference<>() {};
+	private static final ParameterizedTypeReference<ListViewSelectedItemChangedEvent<String>> LISTVIEW_STRING_TYPEREF
+		= new ParameterizedTypeReference<>() {};
+	private static final Logger log = LoggerFactory.getLogger(Catalog.class);
 
 	// mapping from category name to scenarios(can belong to multiple categories)
 	private final Map<String, List<ScenarioData>> categoryMap = new TreeMap<>();
-	private ScenarioContext currentScenarioContext = null;
+	private ScenarioContext currentScenarioContext;
 	private TerminalUI ui;
 	private ListView<String> categories;
 	private ListView<ScenarioData> scenarios;
 	private AppView app;
 	private EventLoop eventLoop;
-	private ThemeResolver themeResolver;
+    private final ThemeResolver themeResolver;
 	private String activeThemeName = "default";
-	private TerminalUIBuilder terminalUIBuilder;
+    private final TerminalUIBuilder terminalUIBuilder;
 
 	public Catalog(TerminalUIBuilder terminalUIBuilder, ThemeResolver themeResolver, List<Scenario> scenarios) {
 		this.terminalUIBuilder = terminalUIBuilder;
@@ -194,10 +194,11 @@ public class Catalog {
 		// handle focus change between lists
 		eventLoop.onDestroy(eventLoop.viewEvents(AppViewEvent.class, app)
 			.subscribe(event -> {
-					switch (event.args().direction()) {
-						case NEXT -> ui.setFocus(scenarios);
-						case PREVIOUS -> ui.setFocus(categories);
-					}
+                if (event.args().direction() == AppView.AppViewEventArgs.Direction.NEXT) {
+                    ui.setFocus(scenarios);
+                } else if (event.args().direction() == AppView.AppViewEventArgs.Direction.PREVIOUS) {
+                    ui.setFocus(categories);
+                }
 				}
 			));
 
@@ -283,12 +284,10 @@ public class Catalog {
 	}
 
 	private MenuBarView buildMenuBar(EventLoop eventLoop) {
-		Runnable quitAction = () -> requestQuit();
-		Runnable aboutAction = () -> about();
+		Runnable quitAction = this::requestQuit;
+		Runnable aboutAction = this::about;
 		MenuItem[] themeItems = themeResolver.themeNames().stream()
-			.map(tn -> {
-				return MenuItem.of(tn, MenuItemCheckStyle.RADIO, styleAction(tn), "default".equals(tn));
-			})
+			.map(tn -> MenuItem.of(tn, MenuItemCheckStyle.RADIO, styleAction(tn), "default".equals(tn)))
 			.toArray(MenuItem[]::new);
 		MenuBarView menuBar = MenuBarView.of(
 			MenuBarItem.of("File",
@@ -306,7 +305,7 @@ public class Catalog {
 	}
 
 	private StatusBarView buildStatusBar(EventLoop eventLoop) {
-		Runnable quitAction = () -> requestQuit();
+		Runnable quitAction = this::requestQuit;
 		Runnable visibilyAction = () -> app.toggleStatusBarVisibility();
 		StatusBarView statusBar = new StatusBarView(new StatusItem[] {
 			StatusItem.of("CTRL-Q Quit", quitAction),

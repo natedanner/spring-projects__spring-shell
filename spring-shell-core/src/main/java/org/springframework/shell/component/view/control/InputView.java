@@ -38,15 +38,15 @@ public class InputView extends BoxView {
 
 	private final Logger log = LoggerFactory.getLogger(InputView.class);
 	private final ArrayList<String> text = new ArrayList<>();
-	private int cursorIndex = 0;
+	private int cursorIndex;
 
 	@Override
 	protected void initInternal() {
-		registerViewCommand(ViewCommand.ACCEPT, () -> done());
-		registerViewCommand(ViewCommand.LEFT, () -> left());
-		registerViewCommand(ViewCommand.RIGHT, () -> right());
-		registerViewCommand(ViewCommand.DELETE_CHAR_LEFT, () -> deleteCharLeft());
-		registerViewCommand(ViewCommand.DELETE_CHAR_RIGHT, () -> deleteCharRight());
+		registerViewCommand(ViewCommand.ACCEPT, this::done);
+		registerViewCommand(ViewCommand.LEFT, this::left);
+		registerViewCommand(ViewCommand.RIGHT, this::right);
+		registerViewCommand(ViewCommand.DELETE_CHAR_LEFT, this::deleteCharLeft);
+		registerViewCommand(ViewCommand.DELETE_CHAR_RIGHT, this::deleteCharRight);
 
 		registerKeyBinding(Key.Enter, ViewCommand.ACCEPT);
 		registerKeyBinding(Key.CursorLeft, ViewCommand.LEFT);
@@ -97,7 +97,7 @@ public class InputView extends BoxView {
 	}
 
 	private int cursorPosition() {
-		return text.stream().limit(cursorIndex).mapToInt(text -> text.length()).sum();
+		return text.stream().limit(cursorIndex).mapToInt(String::length).sum();
 	}
 
 	private void dispatchTextChange(String oldText, String newText) {

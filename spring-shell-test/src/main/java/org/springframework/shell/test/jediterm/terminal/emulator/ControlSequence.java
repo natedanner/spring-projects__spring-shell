@@ -34,8 +34,8 @@ public class ControlSequence {
 
 	private ArrayList<Character> myUnhandledChars;
 
-	private boolean myStartsWithQuestionMark = false; // true when CSI ?
-	private boolean myStartsWithMoreMark = false; // true when CSI >
+	private boolean myStartsWithQuestionMark; // true when CSI ?
+	private boolean myStartsWithMoreMark; // true when CSI >
 
 	private final StringBuilder mySequenceString = new StringBuilder();
 
@@ -103,7 +103,9 @@ public class ControlSequence {
 	}
 
 	public boolean pushBackReordered(final TerminalDataStream channel) throws IOException {
-		if (myUnhandledChars == null) return false;
+        if (myUnhandledChars == null) {
+            return false;
+        }
 		final char[] bytes = new char[1024]; // can't be more than the whole buffer...
 		int i = 0;
 		for (final char b : myUnhandledChars) {
@@ -121,7 +123,9 @@ public class ControlSequence {
 		}
 
 		for (int argi = 0; argi < myArgc; argi++) {
-			if (argi != 0) bytes[i++] = ';';
+            if (argi != 0) {
+                bytes[i++] = ';';
+            }
 			String s = Integer.toString(myArgv[argi]);
 			for (int j = 0; j < s.length(); j++) {
 				bytes[i++] = s.charAt(j);

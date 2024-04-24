@@ -52,18 +52,18 @@ public class JediTerminal implements Terminal, TerminalCoordinates {
 
 	private int myScrollRegionTop;
 	private int myScrollRegionBottom;
-	volatile private int myCursorX = 0;
-	volatile private int myCursorY = 1;
+	private volatile int myCursorX;
+	private volatile int myCursorY = 1;
 
-	private int myTerminalWidth;
-	private int myTerminalHeight;
+    private final int myTerminalWidth;
+    private final int myTerminalHeight;
 
 	private final TerminalDisplay myDisplay;
 	private final TerminalTextBuffer myTerminalTextBuffer;
 
 	private final StyleState myStyleState;
 
-	private StoredCursor myStoredCursor = null;
+	private StoredCursor myStoredCursor;
 
 	private final EnumSet<TerminalMode> myModes = EnumSet.noneOf(TerminalMode.class);
 
@@ -75,7 +75,7 @@ public class JediTerminal implements Terminal, TerminalCoordinates {
 
 	private final GraphicSetState myGraphicSetState;
 
-	private TerminalOutputStream myTerminalOutput = null;
+	private TerminalOutputStream myTerminalOutput;
 
 	private boolean myCursorYChanged;
 
@@ -1006,7 +1006,7 @@ public class JediTerminal implements Terminal, TerminalCoordinates {
 		}
 
 		public DefaultTabulator(int width, int tabLength) {
-			myTabStops = new TreeSet<Integer>();
+			myTabStops = new TreeSet<>();
 
 			myWidth = width;
 			myTabLength = tabLength;

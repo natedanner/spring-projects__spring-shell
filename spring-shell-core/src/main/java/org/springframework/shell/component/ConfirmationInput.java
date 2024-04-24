@@ -41,7 +41,7 @@ import org.springframework.util.StringUtils;
  */
 public class ConfirmationInput extends AbstractTextComponent<Boolean, ConfirmationInputContext> {
 
-	private final static Logger log = LoggerFactory.getLogger(ConfirmationInput.class);
+	private static final Logger log = LoggerFactory.getLogger(ConfirmationInput.class);
 	private final boolean defaultValue;
 	private ConfirmationInputContext currentContext;
 
@@ -73,9 +73,8 @@ public class ConfirmationInput extends AbstractTextComponent<Boolean, Confirmati
 		currentContext = ConfirmationInputContext.of(defaultValue);
 		currentContext.setName(getName());
 		if (context != null) {
-			context.stream().forEach(e -> {
-				currentContext.put(e.getKey(), e.getValue());
-			});
+			context.stream().forEach(e ->
+				currentContext.put(e.getKey(), e.getValue()));
 		}
 		return currentContext;
 	}

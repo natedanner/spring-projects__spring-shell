@@ -90,7 +90,7 @@ public abstract class AbstractCompletions {
 					}
 					String desc = i + 1 < splitKeys.length ? null : registration.getDescription();
 					DefaultCommandModelCommand command = commands.computeIfAbsent(commandKey,
-							(fullCommand) -> new DefaultCommandModelCommand(fullCommand, main, desc));
+							fullCommand -> new DefaultCommandModelCommand(fullCommand, main, desc));
 
 					// TODO long vs short
 					List<CommandModelOption> options = registration.getOptions().stream()
@@ -226,19 +226,19 @@ public abstract class AbstractCompletions {
 		@Override
 		public List<CommandModelCommand> getAllCommands() {
 			return getCommands().stream()
-					.flatMap(c -> flatten(c))
+					.flatMap(this::flatten)
 					.collect(Collectors.toList());
 		}
 
 		@Override
 		public List<String> getRootCommands() {
 			return getCommands().stream()
-					.map(c -> c.getLastCommandPart())
+					.map(AbstractCompletions.CommandModelCommand::getLastCommandPart)
 					.collect(Collectors.toList());
 		}
 
 		private Stream<CommandModelCommand> flatten(CommandModelCommand command) {
-			return Stream.concat(Stream.of(command), command.getCommands().stream().flatMap(c -> flatten(c)));
+			return Stream.concat(Stream.of(command), command.getCommands().stream().flatMap(this::flatten));
 		}
 	}
 
@@ -280,14 +280,14 @@ public abstract class AbstractCompletions {
 		@Override
 		public List<String> getSubCommands() {
 			return this.commands.stream()
-					.map(c -> c.getMainCommand())
+					.map(AbstractCompletions.CommandModelCommand::getMainCommand)
 					.collect(Collectors.toList());
 		}
 
 		@Override
 		public List<String> getFlags() {
 			return this.options.stream()
-					.map(o -> o.option())
+					.map(AbstractCompletions.CommandModelOption::option)
 					.collect(Collectors.toList());
 		}
 
@@ -317,7 +317,7 @@ public abstract class AbstractCompletions {
 			final int prime = 31;
 			int result = 1;
 			result = prime * result + getEnclosingInstance().hashCode();
-			result = prime * result + ((fullCommand == null) ? 0 : fullCommand.hashCode());
+			result = prime * result + (fullCommand == null ? 0 : fullCommand.hashCode());
 			return result;
 		}
 
@@ -409,9 +409,8 @@ public abstract class AbstractCompletions {
 				defaultAttributes.entrySet().stream().forEach(entry -> {
 					String key = entry.getKey();
 					List<Object> values = entry.getValue();
-					values.stream().forEach(v -> {
-						st.add(key, v);
-					});
+					values.stream().forEach(v ->
+						st.add(key, v));
 				});
 				return st.render();
 			};
@@ -422,9 +421,8 @@ public abstract class AbstractCompletions {
 		@Override
 		public String build() {
 			StringBuilder buf = new StringBuilder();
-			operations.stream().forEach(operation -> {
-				buf.append(operation.get());
-			});
+			operations.stream().forEach(operation ->
+				buf.append(operation.get()));
 			return buf.toString();
 		}
 	}

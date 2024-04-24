@@ -104,10 +104,10 @@ public class MenuBarView extends BoxView {
 
 	@Override
 	protected void initInternal() {
-		registerKeyBinding(Key.CursorLeft, () -> left());
-		registerKeyBinding(Key.CursorRight, () -> right());
+		registerKeyBinding(Key.CursorLeft, this::left);
+		registerKeyBinding(Key.CursorRight, this::right);
 
-		registerMouseBinding(MouseEvent.Type.Released | MouseEvent.Button.Button1, event -> select(event));
+		registerMouseBinding(MouseEvent.Type.Released | MouseEvent.Button.Button1, this::select);
 	}
 
 	@Override
@@ -237,7 +237,7 @@ public class MenuBarView extends BoxView {
 		}
 		else {
 			MenuBarItem item = items.get(activeItemIndex);
-			currentMenuView = menuViews.computeIfAbsent(item, i -> buildMenuView(i));
+			currentMenuView = menuViews.computeIfAbsent(item, this::buildMenuView);
 		}
 	}
 
@@ -259,9 +259,8 @@ public class MenuBarView extends BoxView {
 		Dimension dim = menuView.getPreferredDimension();
 		menuView.setRect(rect.x() + x, rect.y() + 1, dim.width(), dim.height());
 		menuView.onDestroy(getEventLoop().viewEvents(MenuViewOpenSelectedItemEvent.class, menuView)
-			.subscribe(event -> {
-				closeCurrentMenuView();
-			}));
+			.subscribe(event ->
+				closeCurrentMenuView()));
 
 		return menuView;
 	}
@@ -288,9 +287,8 @@ public class MenuBarView extends BoxView {
 	private void registerHotKeys() {
 		getItems().stream()
 			.filter(item -> item.getHotKey() != null)
-			.forEach(item -> {
-				registerHotKeyBinding(item.getHotKey(), () -> selectItem(item));
-			});
+			.forEach(item ->
+				registerHotKeyBinding(item.getHotKey(), () -> selectItem(item)));
 	}
 
 	/**

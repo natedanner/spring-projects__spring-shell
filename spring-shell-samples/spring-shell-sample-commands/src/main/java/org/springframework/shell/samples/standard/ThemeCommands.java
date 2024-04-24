@@ -139,33 +139,30 @@ public class ThemeCommands {
 
 	private List<String> combinations1() {
 		List<String> styles = new ArrayList<>();
-		colorGround.stream().forEach(ground -> {
+		colorGround.stream().forEach(ground ->
 			colors.stream().forEach(color -> {
 				named.stream().forEach(named -> {
 					styles.add(String.format("%s,%s:%s", named, ground, color));
 				});
-			});
-		});
+			}));
 		return styles;
 	}
 
 	private List<String> combinations2() {
 		List<String> styles = new ArrayList<>();
-		rgbRedHue.stream().forEach(rgb -> {
-			styles.add(String.format("inverse,fg-rgb:%s", rgb));
-		});
+		rgbRedHue.stream().forEach(rgb ->
+			styles.add(String.format("inverse,fg-rgb:%s", rgb)));
 		return styles;
 	}
 
 	private List<String> combinations3() {
 		List<String> styles = new ArrayList<>();
-		Arrays.asList("fg").stream().forEach(ground -> {
+		Arrays.asList("fg").stream().forEach(ground ->
 			Arrays.asList("white").stream().forEach(color -> {
 				named.stream().forEach(named -> {
 					styles.add(String.format("%s,%s:%s", named, ground, color));
 				});
-			});
-		});
+			}));
 		return styles;
 	}
 }

@@ -55,7 +55,7 @@ public class AbstractCompletionsTests {
 			.and()
 		.build();
 
-	private final CommandRegistration r3_4 = CommandRegistration.builder()
+	private final CommandRegistration r34 = CommandRegistration.builder()
 		.command("test3", "test4")
 		.withTarget()
 			.method(commands, "test4")
@@ -65,7 +65,7 @@ public class AbstractCompletionsTests {
 			.and()
 		.build();
 
-	private final CommandRegistration r3_5 = CommandRegistration.builder()
+	private final CommandRegistration r35 = CommandRegistration.builder()
 		.command("test3", "test5")
 		.withTarget()
 			.method(commands, "test4")
@@ -75,7 +75,7 @@ public class AbstractCompletionsTests {
 			.and()
 		.build();
 
-	private final CommandRegistration r3_4_5 = CommandRegistration.builder()
+	private final CommandRegistration r345 = CommandRegistration.builder()
 		.command("test3", "test4", "test5")
 		.withTarget()
 			.method(commands, "test4")
@@ -85,7 +85,7 @@ public class AbstractCompletionsTests {
 			.and()
 		.build();
 
-	private final CommandRegistration r3_4_6 = CommandRegistration.builder()
+	private final CommandRegistration r346 = CommandRegistration.builder()
 		.command("test3", "test4", "test6")
 		.withTarget()
 			.method(commands, "test4")
@@ -95,7 +95,7 @@ public class AbstractCompletionsTests {
 			.and()
 		.build();
 
-	private final CommandRegistration r3_5_5 = CommandRegistration.builder()
+	private final CommandRegistration r355 = CommandRegistration.builder()
 		.command("test3", "test5", "test5")
 		.withTarget()
 			.method(commands, "test4")
@@ -105,7 +105,7 @@ public class AbstractCompletionsTests {
 			.and()
 		.build();
 
-	private final CommandRegistration r3_5_6 = CommandRegistration.builder()
+	private final CommandRegistration r356 = CommandRegistration.builder()
 		.command("test3", "test5", "test6")
 		.withTarget()
 			.method(commands, "test4")
@@ -120,10 +120,10 @@ public class AbstractCompletionsTests {
 		DefaultResourceLoader resourceLoader = new DefaultResourceLoader();
 		CommandCatalog commandCatalog = CommandCatalog.of();
 
-		commandCatalog.register(r3_4_5);
-		commandCatalog.register(r3_4_6);
-		commandCatalog.register(r3_5_5);
-		commandCatalog.register(r3_5_6);
+		commandCatalog.register(r345);
+		commandCatalog.register(r346);
+		commandCatalog.register(r355);
+		commandCatalog.register(r356);
 		TestCompletions completions = new TestCompletions(resourceLoader, commandCatalog);
 		CommandModel commandModel = completions.testCommandModel();
 
@@ -137,23 +137,19 @@ public class AbstractCompletionsTests {
 					c34 -> {
 						assertThat(c34.getMainCommand()).isEqualTo("test4");
 						assertThat(c34.getCommands()).satisfiesExactlyInAnyOrder(
-							c345 -> {
-								assertThat(c345.getMainCommand()).isEqualTo("test5");
-							},
-							c346 -> {
-								assertThat(c346.getMainCommand()).isEqualTo("test6");
-							}
+							c345 ->
+								assertThat(c345.getMainCommand()).isEqualTo("test5"),
+							c346 ->
+								assertThat(c346.getMainCommand()).isEqualTo("test6")
 						);
 					},
 					c35 -> {
 						assertThat(c35.getMainCommand()).isEqualTo("test5");
 						assertThat(c35.getCommands()).satisfiesExactlyInAnyOrder(
-							c355 -> {
-								assertThat(c355.getMainCommand()).isEqualTo("test5");
-							},
-							c356 -> {
-								assertThat(c356.getMainCommand()).isEqualTo("test6");
-							}
+							c355 ->
+								assertThat(c355.getMainCommand()).isEqualTo("test5"),
+							c356 ->
+								assertThat(c356.getMainCommand()).isEqualTo("test6")
 						);
 					}
 				);
@@ -166,8 +162,8 @@ public class AbstractCompletionsTests {
 		DefaultResourceLoader resourceLoader = new DefaultResourceLoader();
 		CommandCatalog commandCatalog = CommandCatalog.of();
 
-		commandCatalog.register(r3_4);
-		commandCatalog.register(r3_5);
+		commandCatalog.register(r34);
+		commandCatalog.register(r35);
 		TestCompletions completions = new TestCompletions(resourceLoader, commandCatalog);
 		CommandModel commandModel = completions.testCommandModel();
 
@@ -182,18 +178,16 @@ public class AbstractCompletionsTests {
 						assertThat(c34.getMainCommand()).isEqualTo("test4");
 						assertThat(c34.getOptions()).hasSize(1);
 						assertThat(c34.getOptions()).satisfiesExactly(
-							o -> {
-								assertThat(o.option()).isEqualTo("--param4");
-							}
+							o ->
+								assertThat(o.option()).isEqualTo("--param4")
 						);
 					},
 					c35 -> {
 						assertThat(c35.getMainCommand()).isEqualTo("test5");
 						assertThat(c35.getOptions()).hasSize(1);
 						assertThat(c35.getOptions()).satisfiesExactly(
-							o -> {
-								assertThat(o.option()).isEqualTo("--param4");
-							}
+							o ->
+								assertThat(o.option()).isEqualTo("--param4")
 						);
 					}
 				);
@@ -209,7 +203,7 @@ public class AbstractCompletionsTests {
 		commandCatalog.register(r1);
 		commandCatalog.register(r2);
 		commandCatalog.register(r3);
-		commandCatalog.register(r3_4);
+		commandCatalog.register(r34);
 
 		TestCompletions completions = new TestCompletions(resourceLoader, commandCatalog);
 		CommandModel commandModel = completions.testCommandModel();
@@ -219,9 +213,8 @@ public class AbstractCompletionsTests {
 				assertThat(c1.getSubCommands()).hasSize(0);
 				assertThat(c1.getOptions()).hasSize(1);
 				assertThat(c1.getOptions()).satisfiesExactly(
-					o -> {
-						assertThat(o.option()).isEqualTo("--param1");
-					}
+					o ->
+						assertThat(o.option()).isEqualTo("--param1")
 				);
 			},
 			c2 -> {
@@ -239,9 +232,8 @@ public class AbstractCompletionsTests {
 						assertThat(c34.getMainCommand()).isEqualTo("test4");
 						assertThat(c34.getOptions()).hasSize(1);
 						assertThat(c34.getOptions()).satisfiesExactly(
-							o -> {
-								assertThat(o.option()).isEqualTo("--param4");
-							}
+							o ->
+								assertThat(o.option()).isEqualTo("--param4")
 						);
 					}
 				);

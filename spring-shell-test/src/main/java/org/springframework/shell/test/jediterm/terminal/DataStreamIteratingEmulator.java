@@ -27,7 +27,7 @@ public abstract class DataStreamIteratingEmulator implements Emulator {
 	protected final TerminalDataStream myDataStream;
 	protected final Terminal myTerminal;
 
-	private boolean myEof = false;
+	private boolean myEof;
 
 	public DataStreamIteratingEmulator(TerminalDataStream dataStream, Terminal terminal) {
 		myDataStream = dataStream;

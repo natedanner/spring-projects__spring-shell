@@ -42,7 +42,7 @@ public final class CharacterSets {
 	/**
 	 * Denotes the mapping for C0 characters.
 	 */
-	public final static Object[][] C0_CHARS = {{0, "nul"}, //
+	public static final Object[][] C0_CHARS = {{0, "nul"}, //
 		{0, "soh"}, //
 		{0, "stx"}, //
 		{0, "etx"}, //

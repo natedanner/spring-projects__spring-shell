@@ -32,7 +32,7 @@ public class SpringShellPropertiesTests {
 	public void defaultNoPropertiesSet() {
 		this.contextRunner
 				.withUserConfiguration(Config1.class)
-				.run((context) -> {
+				.run(context -> {
 					SpringShellProperties properties = context.getBean(SpringShellProperties.class);
 					assertThat(properties.getHistory().isEnabled()).isTrue();
 					assertThat(properties.getHistory().getName()).isNull();
@@ -115,7 +115,7 @@ public class SpringShellPropertiesTests {
 				.withPropertyValues("spring.shell.option.naming.case-type=camel")
 				.withPropertyValues("spring.shell.context.close=true")
 				.withUserConfiguration(Config1.class)
-				.run((context) -> {
+				.run(context -> {
 					SpringShellProperties properties = context.getBean(SpringShellProperties.class);
 					assertThat(properties.getHistory().isEnabled()).isFalse();
 					assertThat(properties.getHistory().getName()).isEqualTo("fakename");
@@ -164,7 +164,7 @@ public class SpringShellPropertiesTests {
 				.withPropertyValues("spring.shell.help.long-names=")
 				.withPropertyValues("spring.shell.help.short-names=")
 				.withUserConfiguration(Config1.class)
-				.run((context) -> {
+				.run(context -> {
 					SpringShellProperties properties = context.getBean(SpringShellProperties.class);
 					assertThat(properties.getHelp().getLongNames()).isEmpty();
 					assertThat(properties.getHelp().getShortNames()).isEmpty();

@@ -36,7 +36,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class DefaultEventLoopTests {
 
-	private final static Logger log = LoggerFactory.getLogger(DefaultEventLoopTests.class);
+	private static final Logger log = LoggerFactory.getLogger(DefaultEventLoopTests.class);
 	private DefaultEventLoop loop;
 
 	@AfterEach
@@ -200,7 +200,7 @@ class DefaultEventLoopTests {
 	}
 
 	static class TestRunnable implements Runnable {
-		int count = 0;
+		int count;
 
 		@Override
 		public void run() {

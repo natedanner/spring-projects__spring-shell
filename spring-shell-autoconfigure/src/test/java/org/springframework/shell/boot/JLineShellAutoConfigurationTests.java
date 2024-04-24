@@ -34,17 +34,15 @@ class JLineShellAutoConfigurationTests {
 
 	@Test
 	void canCreatePlainTerminal() {
-		contextRunner.run(context -> {
-			assertThat(context).hasSingleBean(Terminal.class);
-		});
+		contextRunner.run(context ->
+			assertThat(context).hasSingleBean(Terminal.class));
 	}
 
 	@Test
 	void canCustomizeTerminalBuilder() {
 		TerminalCustomizer customizer = mock(TerminalCustomizer.class);
 		contextRunner.withBean(TerminalCustomizer.class, () -> customizer)
-				.run(context -> {
-					verify(customizer).customize(any(TerminalBuilder.class));
-				});
+				.run(context ->
+					verify(customizer).customize(any(TerminalBuilder.class)));
 	}
 }

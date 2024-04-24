@@ -37,23 +37,20 @@ public class ComponentCommandsTests extends AbstractSampleTests {
 	void componentSingle(String command, boolean interactive) {
 		BaseShellSession<?> session = createSession(command, interactive);
 
-		await().atMost(2, TimeUnit.SECONDS).untilAsserted(() -> {
+		await().atMost(2, TimeUnit.SECONDS).untilAsserted(() ->
 			assertThat(session.screen().lines()).anySatisfy(line -> {
 				assertThat(line).containsPattern("[>❯] key1");
-			});
-		});
+			}));
 
 		session.write(session.writeSequence().keyDown().build());
-		await().atMost(2, TimeUnit.SECONDS).untilAsserted(() -> {
+		await().atMost(2, TimeUnit.SECONDS).untilAsserted(() ->
 			assertThat(session.screen().lines()).anySatisfy(line -> {
 				assertThat(line).containsPattern("[>❯] key2");
-			});
-		});
+			}));
 
 		session.write(session.writeSequence().cr().build());
-		await().atMost(2, TimeUnit.SECONDS).untilAsserted(() -> {
-			ShellAssertions.assertThat(session.screen()).containsText("Got value value2");
-		});
+		await().atMost(2, TimeUnit.SECONDS).untilAsserted(() ->
+			ShellAssertions.assertThat(session.screen()).containsText("Got value value2"));
 	}
 
 	@ParameterizedTest
@@ -64,22 +61,19 @@ public class ComponentCommandsTests extends AbstractSampleTests {
 	void componentMulti(String command, boolean interactive) {
 		BaseShellSession<?> session = createSession(command, interactive);
 
-		await().atMost(2, TimeUnit.SECONDS).untilAsserted(() -> {
+		await().atMost(2, TimeUnit.SECONDS).untilAsserted(() ->
 			assertThat(session.screen().lines()).anySatisfy(line -> {
 				assertThat(line).containsPattern("[>❯] (☐|\\[ \\])  key1");
-			});
-		});
+			}));
 
 		session.write(session.writeSequence().space().build());
-		await().atMost(2, TimeUnit.SECONDS).untilAsserted(() -> {
+		await().atMost(2, TimeUnit.SECONDS).untilAsserted(() ->
 			assertThat(session.screen().lines()).anySatisfy(line -> {
 				assertThat(line).containsPattern("[>❯] (☒|\\[x\\])  key1");
-			});
-		});
+			}));
 
 		session.write(session.writeSequence().cr().build());
-		await().atMost(2, TimeUnit.SECONDS).untilAsserted(() -> {
-			ShellAssertions.assertThat(session.screen()).containsText("Got value value1,value2");
-		});
+		await().atMost(2, TimeUnit.SECONDS).untilAsserted(() ->
+			ShellAssertions.assertThat(session.screen()).containsText("Got value value1,value2"));
 	}
 }

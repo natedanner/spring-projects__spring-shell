@@ -95,9 +95,8 @@ class ButtonViewTests extends AbstractViewTests {
 
 			MouseHandlerResult result = handleMouseClick(view, click);
 
-			assertThat(result).isNotNull().satisfies(r -> {
-				assertThat(r.consumed()).isTrue();
-			});
+			assertThat(result).isNotNull().satisfies(r ->
+				assertThat(r.consumed()).isTrue());
 			verifier.verify(Duration.ofSeconds(1));
 		}
 
@@ -112,9 +111,8 @@ class ButtonViewTests extends AbstractViewTests {
 
 			KeyHandlerResult result = handleKey(view, KeyEvent.Key.Enter);
 
-			assertThat(result).isNotNull().satisfies(r -> {
-				assertThat(r.consumed()).isTrue();
-			});
+			assertThat(result).isNotNull().satisfies(r ->
+				assertThat(r.consumed()).isTrue());
 			verifier.verify(Duration.ofSeconds(1));
 		}
 

@@ -38,6 +38,7 @@ import org.springframework.shell.component.PathSearch.PathSearchConfig;
 import org.springframework.shell.component.PathSearch.PathSearchContext;
 import org.springframework.shell.component.SingleItemSelector.SingleItemSelectorContext;
 import org.springframework.shell.component.StringInput.StringInputContext;
+import org.springframework.shell.component.support.Itemable;
 import org.springframework.shell.component.support.SelectorItem;
 import org.springframework.shell.standard.AbstractShellComponent;
 import org.springframework.shell.standard.ShellComponent;
@@ -182,7 +183,7 @@ public class UiComponentSnippets {
 				MultiItemSelectorContext<String, SelectorItem<String>> context = component
 						.run(MultiItemSelectorContext.empty());
 				String result = context.getResultItems().stream()
-						.map(si -> si.getItem())
+						.map(Itemable::getItem)
 						.collect(Collectors.joining(","));
 				return "Got value " + result;
 			}

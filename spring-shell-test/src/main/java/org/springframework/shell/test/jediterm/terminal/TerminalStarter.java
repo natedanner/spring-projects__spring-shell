@@ -87,11 +87,10 @@ public class TerminalStarter implements TerminalOutputStream {
 	// }
 
 	public void postResize(int width, int height, RequestOrigin origin) {
-		execute(() -> {
+		execute(() ->
 			resize(myEmulator, myTerminal, myTtyConnector, width, height, origin, (millisDelay, runnable) -> {
 				myEmulatorExecutor.schedule(runnable, millisDelay, TimeUnit.MILLISECONDS);
-			});
-		});
+			}));
 	}
 
 	/**

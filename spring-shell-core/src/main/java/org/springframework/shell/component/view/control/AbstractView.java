@@ -49,7 +49,7 @@ import org.springframework.shell.geom.Rectangle;
  */
 public abstract class AbstractView extends AbstractControl implements View {
 
-	private final static Logger log = LoggerFactory.getLogger(AbstractView.class);
+	private static final Logger log = LoggerFactory.getLogger(AbstractView.class);
 	private final Disposable.Composite disposables = Disposables.composite();
 	private BiFunction<Screen, Rectangle, Rectangle> drawFunction;
 	private boolean hasFocus;
@@ -57,10 +57,10 @@ public abstract class AbstractView extends AbstractControl implements View {
 	private EventLoop eventLoop;
 	private ViewService viewService;
 	private final Map<String, Runnable> commands = new HashMap<>();
-	private Map<Integer, KeyBindingValue> keyBindings = new HashMap<>();
-	private Map<Integer, KeyBindingValue> hotKeyBindings = new HashMap<>();
-	private Map<Integer, MouseBindingValue> mouseBindings = new HashMap<>();
-	private boolean init = false;
+    private final Map<Integer, KeyBindingValue> keyBindings = new HashMap<>();
+    private final Map<Integer, KeyBindingValue> hotKeyBindings = new HashMap<>();
+    private final Map<Integer, MouseBindingValue> mouseBindings = new HashMap<>();
+	private boolean init;
 
 	/**
 	 * Register {@link Disposable} to get disposed when view terminates.
@@ -171,7 +171,7 @@ public abstract class AbstractView extends AbstractControl implements View {
 	@Override
 	public MouseHandler getMouseHandler() {
 		log.trace("getMouseHandler() {}", this);
-		MouseHandler handler = args -> {
+		return args -> {
 			MouseEvent event = args.event();
 			int mouse = event.mouse();
 			View view = null;
@@ -190,7 +190,6 @@ public abstract class AbstractView extends AbstractControl implements View {
 			}
 			return MouseHandler.resultOf(args.event(), consumed, view, this);
 		};
-		return handler;
 	}
 
 	/**
@@ -200,7 +199,7 @@ public abstract class AbstractView extends AbstractControl implements View {
 	@Override
 	public KeyHandler getKeyHandler() {
 		log.trace("getKeyHandler() {}", this);
-		KeyHandler handler = args -> {
+		return args -> {
 			KeyEvent event = args.event();
 			boolean consumed = false;
 			Integer key = event.key();
@@ -213,13 +212,12 @@ public abstract class AbstractView extends AbstractControl implements View {
 			}
 			return KeyHandler.resultOf(event, consumed, null);
 		};
-		return handler;
 	}
 
 	@Override
 	public KeyHandler getHotKeyHandler() {
 		log.trace("getHotKeyHandler() {}", this);
-		KeyHandler handler = args -> {
+		return args -> {
 			KeyEvent event = args.event();
 			View view = null;
 			boolean consumed = false;
@@ -234,7 +232,6 @@ public abstract class AbstractView extends AbstractControl implements View {
 			}
 			return KeyHandler.resultOf(event, consumed, view);
 		};
-		return handler;
 	}
 
 	/**
@@ -316,9 +313,7 @@ public abstract class AbstractView extends AbstractControl implements View {
 	}
 
 	private void registerKeyBinding(Integer keyType, String keyCommand, KeyBindingConsumer keyConsumer, Runnable keyRunnable) {
-		keyBindings.compute(keyType, (key, old) -> {
-			return KeyBindingValue.of(old, keyCommand, keyConsumer, keyRunnable);
-		});
+		keyBindings.compute(keyType, (key, old) -> KeyBindingValue.of(old, keyCommand, keyConsumer, keyRunnable));
 	}
 
 	protected void registerHotKeyBinding(Integer keyType, String keyCommand) {
@@ -334,9 +329,7 @@ public abstract class AbstractView extends AbstractControl implements View {
 	}
 
 	private void registerHotKeyBinding(Integer keyType, String keyCommand, KeyBindingConsumer keyConsumer, Runnable keyRunnable) {
-		hotKeyBindings.compute(keyType, (key, old) -> {
-			return KeyBindingValue.of(old, keyCommand, keyConsumer, keyRunnable);
-		});
+		hotKeyBindings.compute(keyType, (key, old) -> KeyBindingValue.of(old, keyCommand, keyConsumer, keyRunnable));
 	}
 
 	record KeyBindingValue(String keyCommand, KeyBindingConsumer keyConsumer, Runnable keyRunnable) {
@@ -410,9 +403,7 @@ public abstract class AbstractView extends AbstractControl implements View {
 			int y = event.y();
 			return getRect().contains(x, y);
 		};
-		mouseBindings.compute(mouseType, (key, old) -> {
-			return MouseBindingValue.of(old, mouseCommand, mouseConsumer, mouseRunnable, mousePredicate);
-		});
+		mouseBindings.compute(mouseType, (key, old) -> MouseBindingValue.of(old, mouseCommand, mouseConsumer, mouseRunnable, mousePredicate));
 	}
 
 	/**

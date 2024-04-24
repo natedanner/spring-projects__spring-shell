@@ -46,8 +46,8 @@ public class JediEmulator extends DataStreamIteratingEmulator {
 
 	private static final Logger LOG = LoggerFactory.getLogger(JediEmulator.class);
 
-	private static int logThrottlerCounter = 0;
-	private static int logThrottlerRatio = 100;
+	private static int logThrottlerCounter;
+    private static final int logThrottlerRatio = 100;
 	private static int logThrottlerLimit = logThrottlerRatio;
 	private final BlockingQueue<CompletableFuture<Void>> myResizeFutureQueue = new LinkedBlockingQueue<>();
 
@@ -326,13 +326,11 @@ public class JediEmulator extends DataStreamIteratingEmulator {
 				}
 				break;
 			case '#':
-				switch (secondCh) {
-					case '8':
-						terminal.fillScreen('E');
-						break;
-					default:
-						unsupported(ch, secondCh);
-				}
+                if (secondCh == '8') {
+                    terminal.fillScreen('E');
+                } else {
+                    unsupported(ch, secondCh);
+                }
 				break;
 			case '%':
 				switch (secondCh) {

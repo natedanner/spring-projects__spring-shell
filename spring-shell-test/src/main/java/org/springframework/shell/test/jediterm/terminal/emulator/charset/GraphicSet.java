@@ -33,7 +33,7 @@ public class GraphicSet
 		}
 		myIndex = index;
 		// The default mapping, based on XTerm...
-		myDesignation = CharacterSet.valueOf( ( index == 1 ) ? '0' : 'B' );
+		myDesignation = CharacterSet.valueOf( index == 1 ? '0' : 'B' );
 	}
 
 	/**

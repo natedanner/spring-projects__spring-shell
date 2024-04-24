@@ -50,7 +50,7 @@ public class CompleterAutoConfiguration {
 
 		@Override
 		public void complete(LineReader reader, ParsedLine line, List<Candidate> candidates) {
-			CompletingParsedLine cpl = (line instanceof CompletingParsedLine) ? ((CompletingParsedLine) line) : t -> t;
+			CompletingParsedLine cpl = line instanceof CompletingParsedLine ? ((CompletingParsedLine) line) : t -> t;
 
 			CompletionContext context = new CompletionContext(sanitizeInput(line.words()), line.wordIndex(), line.wordCursor(), null, null);
 

@@ -26,7 +26,7 @@ import org.springframework.shell.test.jediterm.terminal.util.Pair;
  */
 public class CharBuffer implements Iterable<Character>, CharSequence {
 
-	public final static CharBuffer EMPTY = new CharBuffer(new char[0], 0, 0);
+	public static final CharBuffer EMPTY = new CharBuffer(new char[0], 0, 0);
 
 	private final char[] myBuf;
 	private final int myStart;
@@ -65,7 +65,7 @@ public class CharBuffer implements Iterable<Character>, CharSequence {
 
 	@Override
 	public Iterator<Character> iterator() {
-		return new Iterator<Character>() {
+		return new Iterator<>() {
 			private int myCurPosition = myStart;
 
 			@Override

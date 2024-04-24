@@ -79,9 +79,8 @@ class DialogViewTests extends AbstractViewTests {
 
 			MouseHandlerResult result = handleMouseClick(view, click);
 
-			assertThat(result).isNotNull().satisfies(r -> {
-				assertThat(r.consumed()).isTrue();
-			});
+			assertThat(result).isNotNull().satisfies(r ->
+				assertThat(r.consumed()).isTrue());
 			verifier1.verify(Duration.ofSeconds(1));
 			verifier2.verify(Duration.ofSeconds(1));
 		}

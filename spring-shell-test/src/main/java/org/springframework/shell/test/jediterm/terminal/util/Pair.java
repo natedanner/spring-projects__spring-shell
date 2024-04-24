@@ -24,7 +24,7 @@ public class Pair<A, B> {
 	public final B second;
 
 	public static <A, B> Pair<A, B> create(A first, B second) {
-		return new Pair<A, B>(first, second);
+		return new Pair<>(first, second);
 	}
 
 	public static <T> T getFirst(Pair<T, ?> pair) {
@@ -54,15 +54,19 @@ public class Pair<A, B> {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
 		Pair<?, ?> pair = (Pair<?, ?>)o;
 
-		if (first != null ? !first.equals(pair.first) : pair.first != null) return false;
-		if (second != null ? !second.equals(pair.second) : pair.second != null) return false;
-
-		return true;
+        if (first != null ? !first.equals(pair.first) : pair.first != null) {
+            return false;
+        }
+        return !(second != null ? !second.equals(pair.second) : pair.second != null);
 	}
 
 	public int hashCode() {

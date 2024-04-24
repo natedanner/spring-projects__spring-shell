@@ -40,7 +40,7 @@ import org.springframework.util.StringUtils;
  */
 public class StringInput extends AbstractTextComponent<String, StringInputContext> {
 
-	private final static Logger log = LoggerFactory.getLogger(StringInput.class);
+	private static final Logger log = LoggerFactory.getLogger(StringInput.class);
 	private final String defaultValue;
 	private StringInputContext currentContext;
 	private Character maskCharacter;
@@ -78,9 +78,8 @@ public class StringInput extends AbstractTextComponent<String, StringInputContex
 		currentContext = StringInputContext.of(defaultValue, maskCharacter);
 		currentContext.setName(getName());
 		if (context != null) {
-			context.stream().forEach(e -> {
-				currentContext.put(e.getKey(), e.getValue());
-			});
+			context.stream().forEach(e ->
+				currentContext.put(e.getKey(), e.getValue()));
 		}
 		return currentContext;
 	}

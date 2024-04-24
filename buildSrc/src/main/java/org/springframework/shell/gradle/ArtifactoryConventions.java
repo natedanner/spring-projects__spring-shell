@@ -36,9 +36,8 @@ public class ArtifactoryConventions {
 		PluginManager pluginManager = project.getPluginManager();
 		pluginManager.apply(ArtifactoryPlugin.class);
 
-		project.getTasks().withType(GenerateModuleMetadata.class, metadata -> {
-			metadata.setEnabled(false);
-		});
+		project.getTasks().withType(GenerateModuleMetadata.class, metadata ->
+			metadata.setEnabled(false));
 
 		project.getPlugins().withType(ArtifactoryPlugin.class, artifactory -> {
 			Task task = project.getTasks().findByName(ArtifactoryTask.ARTIFACTORY_PUBLISH_TASK_NAME);

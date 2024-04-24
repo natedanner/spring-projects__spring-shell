@@ -108,7 +108,7 @@ public class GraphicSetState {
 	 */
 	public void resetState() {
 		for (int i = 0; i < myGraphicSets.length; i++) {
-			myGraphicSets[i].setDesignation(CharacterSet.valueOf((i == 1) ? '0' : 'B'));
+			myGraphicSets[i].setDesignation(CharacterSet.valueOf(i == 1 ? '0' : 'B'));
 		}
 		myGL = myGraphicSets[0];
 		myGR = myGraphicSets[1];

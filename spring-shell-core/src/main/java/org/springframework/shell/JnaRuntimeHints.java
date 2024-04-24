@@ -80,11 +80,10 @@ public class JnaRuntimeHints implements RuntimeHintsRegistrar {
 
 	private void registerForMostReflection(ReflectionHints reflection, String... classNames) {
 		reflection.registerTypes(typeReferences(classNames),
-			hint -> {
+			hint ->
 				hint.withMembers(MemberCategory.DECLARED_CLASSES, MemberCategory.DECLARED_FIELDS,
 					MemberCategory.PUBLIC_CLASSES, MemberCategory.PUBLIC_FIELDS,
-					MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS, MemberCategory.INVOKE_PUBLIC_METHODS);
-			});
+					MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS, MemberCategory.INVOKE_PUBLIC_METHODS));
 	}
 
 	private List<TypeReference> typeReferences(String... classNames) {
@@ -351,7 +350,7 @@ public class JnaRuntimeHints implements RuntimeHintsRegistrar {
 		}
 
 		void withHints(TypeHint.Builder hint) {
-			Stream.of(names()).forEach(f -> hint.withField(f));
+			Stream.of(names()).forEach(hint::withField);
 		}
 	}
 

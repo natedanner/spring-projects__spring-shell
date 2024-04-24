@@ -257,11 +257,10 @@ class MenuBarViewTests extends AbstractViewTests {
 			});
 
 			MenuView menuView = (MenuView) ReflectionTestUtils.getField(view, MENUVIEW_FIELD);
-			assertThat(menuView).isNotNull().satisfies(m -> {
+			assertThat(menuView).isNotNull().satisfies(m ->
 				assertThat(m.getRect()).satisfies(r -> {
 					assertThat(r.x()).isEqualTo(7);
-				});
-			});
+				}));
 
 		}
 

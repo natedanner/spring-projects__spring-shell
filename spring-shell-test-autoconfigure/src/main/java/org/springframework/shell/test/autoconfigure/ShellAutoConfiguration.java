@@ -39,12 +39,11 @@ public class ShellAutoConfiguration {
 
 	@Bean
 	TerminalCustomizer terminalStreamsTerminalCustomizer(TerminalStreams terminalStreams) {
-		return builder -> {
+		return builder ->
 			builder.streams(terminalStreams.input, terminalStreams.output)
 				.jansi(false)
 				.jna(false)
 				.jni(false);
-		};
 	}
 
 	@Bean
@@ -84,7 +83,7 @@ public class ShellAutoConfiguration {
 
 	private static class TestTtyConnector implements TtyConnector {
 
-		private final static Logger log = LoggerFactory.getLogger(TestTtyConnector.class);
+		private static final Logger log = LoggerFactory.getLogger(TestTtyConnector.class);
 		InputStreamReader myReader;
 		OutputStreamWriter myWriter;
 

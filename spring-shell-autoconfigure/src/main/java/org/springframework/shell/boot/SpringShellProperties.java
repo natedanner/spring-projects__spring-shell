@@ -162,7 +162,7 @@ public class SpringShellProperties {
 
 	public static class Script {
 
-		private boolean enabled = false;
+		private boolean enabled;
 
 		public boolean isEnabled() {
 			return enabled;
@@ -175,7 +175,7 @@ public class SpringShellProperties {
 
 	public static class Interactive {
 
-		private boolean enabled = false;
+		private boolean enabled;
 
 		public boolean isEnabled() {
 			return enabled;
@@ -433,15 +433,15 @@ public class SpringShellProperties {
 
 		private boolean enabled = true;
 		private String template = "classpath:template/version-default.st";
-		private boolean showBuildGroup = false;
-		private boolean showBuildArtifact = false;
-		private boolean showBuildName = false;
+		private boolean showBuildGroup;
+		private boolean showBuildArtifact;
+		private boolean showBuildName;
 		private boolean showBuildVersion = true;
-		private boolean showBuildTime = false;
-		private boolean showGitBranch = false;
-		private boolean showGitCommitId = false;
-		private boolean showGitShortCommitId = false;
-		private boolean showGitCommitTime = false;
+		private boolean showBuildTime;
+		private boolean showGitBranch;
+		private boolean showGitCommitId;
+		private boolean showGitShortCommitId;
+		private boolean showGitCommitTime;
 
 		public boolean isEnabled() {
 			return enabled;
@@ -614,7 +614,7 @@ public class SpringShellProperties {
 
 	public static class Context {
 
-		private boolean close = false;
+		private boolean close;
 
 		public boolean isClose() {
 			return close;
@@ -625,7 +625,7 @@ public class SpringShellProperties {
 		}
 	}
 
-	public static enum OptionNamingCase {
+    public enum OptionNamingCase {
 		NOOP,
 		CAMEL,
 		SNAKE,

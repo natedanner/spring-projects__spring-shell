@@ -46,9 +46,8 @@ class TerminalUIAutoConfigurationTests {
 	public void terminalUICreated() {
 		this.contextRunner
 				.withUserConfiguration(MockConfiguration.class)
-				.run(context -> {
-					assertThat(context).hasSingleBean(TerminalUIBuilder.class);
-				});
+				.run(context ->
+					assertThat(context).hasSingleBean(TerminalUIBuilder.class));
 	}
 
 	@Test
@@ -81,9 +80,7 @@ class TerminalUIAutoConfigurationTests {
 
 		@Bean
 		ThemeActive themeActive() {
-			return () -> {
-				return "default";
-			};
+			return () -> "default";
 		}
 
 	}

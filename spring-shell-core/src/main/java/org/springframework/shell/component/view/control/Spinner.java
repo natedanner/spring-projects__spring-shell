@@ -63,14 +63,14 @@ public interface Spinner {
 		};
 	}
 
-	final static String[] LINE1 = new String[] {
+	static final String[] LINE1 = new String[] {
 		"-",
 		"\\",
 		"|",
 		"/"
 	};
 
-	final static String[] DOTS1 = new String[] {
+	static final String[] DOTS1 = new String[] {
 		"⠋",
 		"⠙",
 		"⠹",
@@ -83,7 +83,7 @@ public interface Spinner {
 		"⠏"
 	};
 
-	final static String[] DOTS2 = new String[] {
+	static final String[] DOTS2 = new String[] {
 		"⣾",
 		"⣽",
 		"⣻",
@@ -94,7 +94,7 @@ public interface Spinner {
 		"⣷"
 	};
 
-	final static String[] DOTS3 = new String[] {
+	static final String[] DOTS3 = new String[] {
 		"⠋",
 		"⠙",
 		"⠚",
@@ -107,7 +107,7 @@ public interface Spinner {
 		"⠓"
 	};
 
-	final static String[] DOTS4 = new String[] {
+	static final String[] DOTS4 = new String[] {
 		"⠄",
 		"⠆",
 		"⠇",
@@ -124,7 +124,7 @@ public interface Spinner {
 		"⠆"
 	};
 
-	final static String[] DOTS5 = new String[] {
+	static final String[] DOTS5 = new String[] {
 		"⠋",
 		"⠙",
 		"⠚",
@@ -144,7 +144,7 @@ public interface Spinner {
 		"⠋"
 	};
 
-	final static String[] DOTS6 = new String[] {
+	static final String[] DOTS6 = new String[] {
 		"⠁",
 		"⠉",
 		"⠙",
@@ -171,7 +171,7 @@ public interface Spinner {
 		"⠁"
 	};
 
-	final static String[] DOTS7 = new String[] {
+	static final String[] DOTS7 = new String[] {
 		"⠈",
 		"⠉",
 		"⠋",
@@ -198,7 +198,7 @@ public interface Spinner {
 		"⠈"
 	};
 
-	final static String[] DOTS8 = new String[] {
+	static final String[] DOTS8 = new String[] {
 		"⠁",
 		"⠁",
 		"⠉",
@@ -230,7 +230,7 @@ public interface Spinner {
 		"⠈"
 	};
 
-	final static String[] DOTS9 = new String[] {
+	static final String[] DOTS9 = new String[] {
 		"⢹",
 		"⢺",
 		"⢼",
@@ -241,7 +241,7 @@ public interface Spinner {
 		"⡏"
 	};
 
-	final static String[] DOTS10 = new String[] {
+	static final String[] DOTS10 = new String[] {
 		"⢄",
 		"⢂",
 		"⢁",
@@ -251,7 +251,7 @@ public interface Spinner {
 		"⡠"
 	};
 
-	final static String[] DOTS11 = new String[] {
+	static final String[] DOTS11 = new String[] {
 		"⠁",
 		"⠂",
 		"⠄",
@@ -262,7 +262,7 @@ public interface Spinner {
 		"⠈"
 	};
 
-	final static String[] DOTS12 = new String[] {
+	static final String[] DOTS12 = new String[] {
 		"⢀⠀",
 		"⡀⠀",
 		"⠄⠀",
@@ -321,7 +321,7 @@ public interface Spinner {
 		"⠀⡀"
 	};
 
-	final static String[] DOTS13 = new String[] {
+	static final String[] DOTS13 = new String[] {
 		"⣼",
 		"⣹",
 		"⢻",
@@ -332,7 +332,7 @@ public interface Spinner {
 		"⣶"
 	};
 
-	final static String[] DOTS14 = new String[] {
+	static final String[] DOTS14 = new String[] {
 		".   ",
 		" .  ",
 		"  . ",

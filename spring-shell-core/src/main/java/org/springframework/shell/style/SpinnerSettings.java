@@ -27,12 +27,12 @@ public abstract class SpinnerSettings {
 	/**
 	 * Spinner with line characters.
 	 */
-	public final static String TAG_LINE = "line";
+	public static final String TAG_LINE = "line";
 
 	/**
 	 * Spinner with dot characters.
 	 */
-	public final static String TAG_DOT = "dot";
+	public static final String TAG_DOT = "dot";
 
 	public Spinner line() {
 		return Spinner.of(Spinner.LINE1, 130);
@@ -43,12 +43,11 @@ public abstract class SpinnerSettings {
 	}
 
 	public Spinner resolveTag(String tag) {
-		switch (tag) {
-			case TAG_LINE:
-				return line();
-			case TAG_DOT:
-				return dot();
-		}
+        if (TAG_LINE.equals(tag)) {
+            return line();
+        } else if (TAG_DOT.equals(tag)) {
+            return dot();
+        }
 		throw new IllegalArgumentException(String.format("Unknown tag '%s'", tag));
 	}
 

@@ -180,7 +180,7 @@ public interface ComponentFlow {
 		ComponentFlow build();
 	}
 
-	static abstract class BaseBuilder implements Builder {
+	abstract static class BaseBuilder implements Builder {
 
 		private final List<BaseStringInput> stringInputs = new ArrayList<>();
 		private final List<BasePathInput> pathInputs = new ArrayList<>();
@@ -446,7 +446,7 @@ public interface ComponentFlow {
 		private Stream<OrderedInputOperation> stringInputsStream() {
 			return stringInputs.stream().map(input -> {
 				StringInput selector = new StringInput(terminal, input.getName(), input.getDefaultValue());
-				Function<ComponentContext<?>, ComponentContext<?>> operation = (context) -> {
+				Function<ComponentContext<?>, ComponentContext<?>> operation = context -> {
 						if (input.getResultMode() == ResultMode.ACCEPT && input.isStoreResult()
 								&& StringUtils.hasText(input.getResultValue())) {
 							context.put(input.getId(), input.getResultValue());
@@ -463,13 +463,11 @@ public interface ComponentFlow {
 						}
 						if (input.isStoreResult()) {
 							if (input.getResultMode() == ResultMode.VERIFY && StringUtils.hasText(input.getResultValue())) {
-								selector.addPreRunHandler(c -> {
-									c.setDefaultValue(input.getResultValue());
-								});
+								selector.addPreRunHandler(c ->
+									c.setDefaultValue(input.getResultValue()));
 							}
-							selector.addPostRunHandler(c -> {
-								c.put(input.getId(), c.getResultValue());
-							});
+							selector.addPostRunHandler(c ->
+								c.put(input.getId(), c.getResultValue()));
 						}
 						for (Consumer<StringInputContext> handler : input.getPreHandlers()) {
 							selector.addPreRunHandler(handler);
@@ -490,7 +488,7 @@ public interface ComponentFlow {
 		private Stream<OrderedInputOperation> pathInputsStream() {
 			return pathInputs.stream().map(input -> {
 				PathInput selector = new PathInput(terminal, input.getName());
-				Function<ComponentContext<?>, ComponentContext<?>> operation = (context) -> {
+				Function<ComponentContext<?>, ComponentContext<?>> operation = context -> {
 						if (input.getResultMode() == ResultMode.ACCEPT && input.isStoreResult()
 								&& StringUtils.hasText(input.getResultValue())) {
 							context.put(input.getId(), Paths.get(input.getResultValue()));
@@ -505,9 +503,8 @@ public interface ComponentFlow {
 							selector.setRenderer(input.getRenderer());
 						}
 						if (input.isStoreResult()) {
-							selector.addPostRunHandler(c -> {
-								c.put(input.getId(), c.getResultValue());
-							});
+							selector.addPostRunHandler(c ->
+								c.put(input.getId(), c.getResultValue()));
 						}
 						for (Consumer<PathInputContext> handler : input.getPreHandlers()) {
 							selector.addPreRunHandler(handler);
@@ -528,7 +525,7 @@ public interface ComponentFlow {
 		private Stream<OrderedInputOperation> confirmationInputsStream() {
 			return confirmationInputs.stream().map(input -> {
 				ConfirmationInput selector = new ConfirmationInput(terminal, input.getName(), input.getDefaultValue());
-				Function<ComponentContext<?>, ComponentContext<?>> operation = (context) -> {
+				Function<ComponentContext<?>, ComponentContext<?>> operation = context -> {
 						if (input.getResultMode() == ResultMode.ACCEPT && input.isStoreResult()
 								&& input.getResultValue() != null) {
 							context.put(input.getId(), input.getResultValue());
@@ -543,9 +540,8 @@ public interface ComponentFlow {
 							selector.setRenderer(input.getRenderer());
 						}
 						if (input.isStoreResult()) {
-							selector.addPostRunHandler(c -> {
-								c.put(input.getId(), c.getResultValue());
-							});
+							selector.addPostRunHandler(c ->
+								c.put(input.getId(), c.getResultValue()));
 						}
 						for (Consumer<ConfirmationInputContext> handler : input.getPreHandlers()) {
 							selector.addPreRunHandler(handler);
@@ -582,7 +578,7 @@ public interface ComponentFlow {
 				SingleItemSelector<String, SelectorItem<String>> selector = new SingleItemSelector<>(terminal,
 						selectorItems, input.getName(), input.getComparator());
 				selector.setDefaultExpose(defaultExpose);
-				Function<ComponentContext<?>, ComponentContext<?>> operation = (context) -> {
+				Function<ComponentContext<?>, ComponentContext<?>> operation = context -> {
 					if (input.getResultMode() == ResultMode.ACCEPT && input.isStoreResult()
 							&& StringUtils.hasText(input.getResultValue())) {
 						context.put(input.getId(), input.getResultValue());
@@ -600,11 +596,10 @@ public interface ComponentFlow {
 						selector.setMaxItems(input.getMaxItems());
 					}
 					if (input.isStoreResult()) {
-						selector.addPostRunHandler(c -> {
+						selector.addPostRunHandler(c ->
 							c.getValue().ifPresent(v -> {
 								c.put(input.getId(), v);
-							});
-						});
+							}));
 					}
 					for (Consumer<SingleItemSelectorContext<String, SelectorItem<String>>> handler : input.getPreHandlers()) {
 						selector.addPreRunHandler(handler);
@@ -629,7 +624,7 @@ public interface ComponentFlow {
 						.collect(Collectors.toList());
 				MultiItemSelector<String, SelectorItem<String>> selector = new MultiItemSelector<>(terminal,
 						selectorItems, input.getName(), input.getComparator());
-				Function<ComponentContext<?>, ComponentContext<?>> operation = (context) -> {
+				Function<ComponentContext<?>, ComponentContext<?>> operation = context -> {
 					if (input.getResultMode() == ResultMode.ACCEPT && input.isStoreResult()
 							&& !ObjectUtils.isEmpty(input.getResultValues())) {
 						context.put(input.getId(), input.getResultValues());
@@ -647,9 +642,8 @@ public interface ComponentFlow {
 						selector.setMaxItems(input.getMaxItems());
 					}
 					if (input.isStoreResult()) {
-						selector.addPostRunHandler(c -> {
-							c.put(input.getId(), c.getValues());
-						});
+						selector.addPostRunHandler(c ->
+							c.put(input.getId(), c.getValues()));
 					}
 					for (Consumer<MultiItemSelectorContext<String, SelectorItem<String>>> handler : input.getPreHandlers()) {
 						selector.addPreRunHandler(handler);

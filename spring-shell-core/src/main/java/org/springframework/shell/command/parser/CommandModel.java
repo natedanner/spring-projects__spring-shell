@@ -75,11 +75,8 @@ public class CommandModel {
 	Map<String, Token> getValidRootTokens() {
 		Map<String, Token> tokens = new HashMap<>();
 
-		rootCommands.entrySet().forEach(e -> {
-			tokens.put(e.getKey(), new Token(e.getKey(), TokenType.COMMAND));
-			// Map<String, Token> validTokens = e.getValue().getValidTokens();
-			// tokens.putAll(validTokens);
-		});
+		rootCommands.entrySet().forEach(e ->
+			tokens.put(e.getKey(), new Token(e.getKey(), TokenType.COMMAND)));
 
 		// rootCommands.entrySet().forEach(e -> {
 		// 	tokens.put(e.getKey(), new Token(e.getKey(), TokenType.COMMAND));
@@ -188,9 +185,8 @@ public class CommandModel {
 		 */
 		Map<String, Token> getValidTokens() {
 			Map<String, Token> tokens = new HashMap<>();
-			children.values().forEach(commandInfo -> {
-				tokens.put(commandInfo.command, new Token(command, TokenType.COMMAND));
-			});
+			children.values().forEach(commandInfo ->
+				tokens.put(commandInfo.command, new Token(command, TokenType.COMMAND)));
 			if (registration != null) {
 				registration.getOptions().forEach(commandOption -> {
 					for (String longName : commandOption.getLongNames()) {

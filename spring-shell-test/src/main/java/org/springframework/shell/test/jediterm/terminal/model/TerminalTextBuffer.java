@@ -67,7 +67,7 @@ public class TerminalTextBuffer {
 
 	// private boolean myAlternateBuffer = false;
 
-	private boolean myUsingAlternateBuffer = false;
+	private boolean myUsingAlternateBuffer;
 
 	private final List<TerminalModelListener> myListeners = new CopyOnWriteArrayList<>();
 
@@ -360,7 +360,7 @@ public class TerminalTextBuffer {
 	public Pair<Character, TextStyle> getStyledCharAt(int x, int y) {
 		synchronized (myScreenBuffer) {
 			TerminalLine line = getLine(y);
-			return new Pair<Character, TextStyle>(line.charAt(x), line.getStyleAt(x));
+			return new Pair<>(line.charAt(x), line.getStyleAt(x));
 		}
 	}
 

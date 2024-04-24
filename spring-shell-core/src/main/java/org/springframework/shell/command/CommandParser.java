@@ -234,17 +234,14 @@ public interface CommandParser {
 			List<String> positional = new ArrayList<>();
 			List<CommandParserException> errors = new ArrayList<>();
 
-			result.optionResults().forEach(or -> {
-				results.add(CommandParserResult.of(or.option(), or.value()));
-			});
+			result.optionResults().forEach(or ->
+				results.add(CommandParserResult.of(or.option(), or.value())));
 
-			result.messageResults().forEach(mr -> {
-				errors.add(new CommandParserException(mr.getMessage()));
-			});
+			result.messageResults().forEach(mr ->
+				errors.add(new CommandParserException(mr.getMessage())));
 
-			result.argumentResults().forEach(ar -> {
-				positional.add(ar.value());
-			});
+			result.argumentResults().forEach(ar ->
+				positional.add(ar.value()));
 
 			return new DefaultCommandParserResults(result.commandRegistration(), results, positional, errors);
 		}

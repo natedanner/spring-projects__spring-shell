@@ -36,17 +36,15 @@ public class ParameterResolverAutoConfigurationTests {
 	@Test
 	void defaultCompletionResolverExists() {
 		this.contextRunner.withUserConfiguration(CustomShellConversionServiceConfiguration.class)
-				.run((context) -> {
-					assertThat(context).hasSingleBean(CompletionResolver.class);
-				});
+				.run(context ->
+					assertThat(context).hasSingleBean(CompletionResolver.class));
 	}
 
 	@Test
 	void defaultCommandExecutionHandlerMethodArgumentResolversExists() {
 		this.contextRunner.withUserConfiguration(CustomShellConversionServiceConfiguration.class)
-				.run((context) -> {
-					assertThat(context).hasSingleBean(CommandExecutionHandlerMethodArgumentResolvers.class);
-				});
+				.run(context ->
+					assertThat(context).hasSingleBean(CommandExecutionHandlerMethodArgumentResolvers.class));
 	}
 
 	@Configuration
@@ -54,7 +52,7 @@ public class ParameterResolverAutoConfigurationTests {
 
 		@Bean
 		ShellConversionServiceSupplier shellConversionServiceSupplier() {
-			return () -> new DefaultConversionService();
+			return DefaultConversionService::new;
 		}
 	}
 }

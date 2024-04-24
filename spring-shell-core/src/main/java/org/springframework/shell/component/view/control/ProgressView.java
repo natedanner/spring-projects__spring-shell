@@ -52,11 +52,11 @@ import org.springframework.util.ObjectUtils;
  */
 public class ProgressView extends BoxView {
 
-	private final static Logger log = LoggerFactory.getLogger(ProgressView.class);
+	private static final Logger log = LoggerFactory.getLogger(ProgressView.class);
 	private final int tickStart;
 	private final int tickEnd;
 	private int tickValue;
-	private boolean running = false;
+	private boolean running;
 	private String description;
 	private Spinner spinner;
 	private List<ProgressViewItem> items;
@@ -65,26 +65,20 @@ public class ProgressView extends BoxView {
 	private long updateTime;
 	private List<TextCell<ProgressContext>> cells = new ArrayList<>();
 
-	private final static Function<ProgressContext, TextCell<ProgressContext>> DEFAULT_DESCRIPTION_FACTORY =
-			(item) -> TextCell.of(item, ctx -> {
-				return ctx.getDescription();
-			});
+	private static final Function<ProgressContext, TextCell<ProgressContext>> DEFAULT_DESCRIPTION_FACTORY =
+			item -> TextCell.of(item, ProgressView.ProgressContext::getDescription);
 
-	private final static Function<ProgressContext, TextCell<ProgressContext>> DEFAULT_PERCENT_FACTORY =
-			(item) -> {
-				TextCell<ProgressContext> cell = TextCell.of(item, ctx -> {
+	private static final Function<ProgressContext, TextCell<ProgressContext>> DEFAULT_PERCENT_FACTORY =
+			item -> TextCell.of(item, ctx -> {
 					ProgressState state = ctx.getState();
 					int percentAbs = state.tickEnd() - state.tickStart();
 					int relativeValue = state.tickValue() - state.tickStart();
 					int percent = (relativeValue * 100) / percentAbs;
 					return String.format("%s%%", percent);
 				});
-				return cell;
-			};
 
-	private final static Function<ProgressContext, TextCell<ProgressContext>> DEFAULT_SPINNER_FACTORY =
-			item -> {
-				TextCell<ProgressContext> cell = TextCell.of(item, ctx -> {
+	private static final Function<ProgressContext, TextCell<ProgressContext>> DEFAULT_SPINNER_FACTORY =
+			item -> TextCell.of(item, ctx -> {
 					int frame = 0;
 
 					// via view setting, then via theming, then fallback default
@@ -107,8 +101,6 @@ public class ProgressView extends BoxView {
 
 					return String.format("%s", spin.getFrames()[frame]);
 				});
-				return cell;
-			};
 
 	/**
 	 * Construct view with {@code tickStart 0} and {@code tickEnd 100}. Uses default
@@ -243,8 +235,8 @@ public class ProgressView extends BoxView {
 	}
 
 	private Disposable.Composite disposables;
-	private final String TAG_KEY = "ProgressView";
-	private final String TAG_VALUE = UUID.randomUUID().toString();
+	private static final String TAG_KEY = "ProgressView";
+	private final String tagValue = UUID.randomUUID().toString();
 
 	private void scheduleTicks() {
 		if (disposables != null) {
@@ -254,23 +246,18 @@ public class ProgressView extends BoxView {
 		if (eventLoop == null) {
 			return;
 		}
-		Flux<Message<?>> ticks = Flux.interval(Duration.ofMillis(50)).map(l -> {
-			Message<Long> message = MessageBuilder
+		Flux<Message<?>> ticks = Flux.interval(Duration.ofMillis(50)).map(l -> MessageBuilder
 				.withPayload(l)
 				.setHeader(ShellMessageHeaderAccessor.EVENT_TYPE, EventLoop.Type.USER)
-				.setHeader(TAG_KEY, TAG_VALUE)
-				.build();
-			return message;
-		});
-		Disposable ticksDisposable = ticks.subscribe(m -> {
-			eventLoop.dispatch(m);
-		});
+				.setHeader(TAG_KEY, tagValue)
+				.build());
+		Disposable ticksDisposable = ticks.subscribe(m ->
+			eventLoop.dispatch(m));
 		Disposable eventsDisposable = eventLoop.events()
 			.filter(m -> EventLoop.Type.USER.equals(StaticShellMessageHeaderAccessor.getEventType(m)))
-			.filter(m -> ObjectUtils.nullSafeEquals(m.getHeaders().get(TAG_KEY), TAG_VALUE))
-			.subscribe(m -> {
-				requestRedraw();
-			});
+			.filter(m -> ObjectUtils.nullSafeEquals(m.getHeaders().get(TAG_KEY), tagValue))
+			.subscribe(m ->
+				requestRedraw());
 		disposables = Disposables.composite();
 		disposables.add(eventsDisposable);
 		disposables.add(ticksDisposable);

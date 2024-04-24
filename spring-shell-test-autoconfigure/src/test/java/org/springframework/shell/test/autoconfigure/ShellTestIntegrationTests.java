@@ -46,14 +46,12 @@ public class ShellTestIntegrationTests {
 	void testInteractive1() throws Exception {
 		InteractiveShellSession session = client.interactive().run();
 
-		await().atMost(2, TimeUnit.SECONDS).untilAsserted(() -> {
-			ShellAssertions.assertThat(session.screen()).containsText("shell");
-		});
+		await().atMost(2, TimeUnit.SECONDS).untilAsserted(() ->
+			ShellAssertions.assertThat(session.screen()).containsText("shell"));
 
 		session.write(session.writeSequence().text("help").carriageReturn().build());
-		await().atMost(2, TimeUnit.SECONDS).untilAsserted(() -> {
-			ShellAssertions.assertThat(session.screen()).containsText("AVAILABLE COMMANDS");
-		});
+		await().atMost(2, TimeUnit.SECONDS).untilAsserted(() ->
+			ShellAssertions.assertThat(session.screen()).containsText("AVAILABLE COMMANDS"));
 
 		session.write(session.writeSequence().carriageReturn().build());
 		await().atMost(4, TimeUnit.SECONDS).untilAsserted(() -> {
@@ -70,23 +68,20 @@ public class ShellTestIntegrationTests {
 		});
 
 		session.write(session.writeSequence().ctrl('c').build());
-		await().atMost(2, TimeUnit.SECONDS).untilAsserted(() -> {
-			assertThat(session.isComplete()).isTrue();
-		});
+		await().atMost(2, TimeUnit.SECONDS).untilAsserted(() ->
+			assertThat(session.isComplete()).isTrue());
 	}
 
 	@Test
 	void testInteractive2() throws Exception {
 		InteractiveShellSession session = client.interactive().run();
 
-		await().atMost(2, TimeUnit.SECONDS).untilAsserted(() -> {
-			ShellAssertions.assertThat(session.screen()).containsText("shell:");
-		});
+		await().atMost(2, TimeUnit.SECONDS).untilAsserted(() ->
+			ShellAssertions.assertThat(session.screen()).containsText("shell:"));
 
 		session.write(session.writeSequence().ctrl('c').build());
-		await().atMost(30, TimeUnit.SECONDS).untilAsserted(() -> {
-			assertThat(session.isComplete()).isTrue();
-		});
+		await().atMost(30, TimeUnit.SECONDS).untilAsserted(() ->
+			assertThat(session.isComplete()).isTrue());
 	}
 
 	@Test
@@ -123,9 +118,8 @@ public class ShellTestIntegrationTests {
 		});
 
 		session.write(session.writeSequence().ctrl('c').build());
-		await().atMost(2, TimeUnit.SECONDS).untilAsserted(() -> {
-			assertThat(session.isComplete()).isTrue();
-		});
+		await().atMost(2, TimeUnit.SECONDS).untilAsserted(() ->
+			assertThat(session.isComplete()).isTrue());
 	}
 
 	@Test

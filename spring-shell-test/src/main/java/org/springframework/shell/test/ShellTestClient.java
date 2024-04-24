@@ -160,7 +160,7 @@ public interface ShellTestClient extends Closeable {
 
 	static class DefaultShellClient implements ShellTestClient {
 
-		private final static Logger log = LoggerFactory.getLogger(DefaultShellClient.class);
+		private static final Logger log = LoggerFactory.getLogger(DefaultShellClient.class);
 		private TerminalSession terminalSession;
 		private Shell shell;
 		private PromptProvider promptProvider;
@@ -320,7 +320,7 @@ public interface ShellTestClient extends Closeable {
 
 	static class ShellRunnerTask implements Runnable {
 
-		private final static Logger log = LoggerFactory.getLogger(ShellRunnerTask.class);
+		private static final Logger log = LoggerFactory.getLogger(ShellRunnerTask.class);
 		private BlockingQueue<ShellRunnerTaskData> blockingQueue;
 
 		ShellRunnerTask(BlockingQueue<ShellRunnerTaskData> blockingQueue) {

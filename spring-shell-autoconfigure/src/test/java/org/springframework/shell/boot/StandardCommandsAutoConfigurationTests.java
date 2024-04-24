@@ -37,18 +37,15 @@ public class StandardCommandsAutoConfigurationTests {
 	public void testCompletionCommand() {
 		this.contextRunner
 				.with(disableCommands("help", "clear", "quit", "stacktrace", "script", "history"))
-				.run((context) -> {assertThat(context).doesNotHaveBean(Completion.class);
-		});
+				.run(context ->assertThat(context).doesNotHaveBean(Completion.class));
 		this.contextRunner
 				.with(disableCommands("help", "clear", "quit", "stacktrace", "script", "history", "completion"))
 				.withPropertyValues("spring.shell.command.completion.root-command=fake")
-				.run((context) -> {assertThat(context).doesNotHaveBean(Completion.class);
-		});
+				.run(context ->assertThat(context).doesNotHaveBean(Completion.class));
 		this.contextRunner
 				.with(disableCommands("help", "clear", "quit", "stacktrace", "script", "history"))
 				.withPropertyValues("spring.shell.command.completion.root-command=fake")
-				.run((context) -> {assertThat(context).hasSingleBean(Completion.class);
-		});
+				.run(context ->assertThat(context).hasSingleBean(Completion.class));
 	}
 
 	@Test
@@ -67,7 +64,7 @@ public class StandardCommandsAutoConfigurationTests {
 	}
 
 	private static Function<ApplicationContextRunner, ApplicationContextRunner> disableCommands(String... commands) {
-		return (cr) -> {
+		return cr -> {
 			for (String command : commands) {
 				cr = cr.withPropertyValues(String.format("spring.shell.command.%s.enabled=false", command));
 			}

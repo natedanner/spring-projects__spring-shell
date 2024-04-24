@@ -64,9 +64,8 @@ public class SingleItemSelector<T, I extends Nameable & Matchable & Enableable &
 			currentContext.setItems(getItems());
 		}
 		if (context != null) {
-			context.stream().forEach(e -> {
-				currentContext.put(e.getKey(), e.getValue());
-			});
+			context.stream().forEach(e ->
+				currentContext.put(e.getKey(), e.getValue()));
 		}
 		return currentContext;
 	}
@@ -123,7 +122,7 @@ public class SingleItemSelector<T, I extends Nameable & Matchable & Enableable &
 	private static class DefaultSingleItemSelectorContext<T, I extends Nameable & Matchable & Itemable<T>> extends
 			BaseSelectorComponentContext<T, I, SingleItemSelectorContext<T, I>> implements SingleItemSelectorContext<T, I> {
 
-		private Function<T, String> itemMapper = item -> item.toString();
+		private Function<T, String> itemMapper = Object::toString;
 
 		DefaultSingleItemSelectorContext() {
 		}
@@ -148,9 +147,8 @@ public class SingleItemSelector<T, I extends Nameable & Matchable & Enableable &
 		@Override
 		public Map<String, Object> toTemplateModel() {
 			Map<String, Object> attributes = super.toTemplateModel();
-			getValue().ifPresent(value -> {
-				attributes.put("value", value);
-			});
+			getValue().ifPresent(value ->
+				attributes.put("value", value));
 			List<Map<String, Object>> rows = getItemStateView().stream()
 				.map(is -> {
 					Map<String, Object> map = new HashMap<>();

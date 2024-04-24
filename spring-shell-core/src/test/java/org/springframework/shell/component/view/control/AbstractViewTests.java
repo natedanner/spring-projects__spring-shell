@@ -75,14 +75,12 @@ public class AbstractViewTests {
 				v.setEventLoop(eventLoop);
 			}
 			eventLoop.onDestroy(eventLoop.mouseEvents()
-				.doOnNext(m -> {
-					view.getMouseHandler().handle(MouseHandler.argsOf(m));
-				})
+				.doOnNext(m ->
+					view.getMouseHandler().handle(MouseHandler.argsOf(m)))
 				.subscribe());
 			eventLoop.onDestroy(eventLoop.keyEvents()
-				.doOnNext(m -> {
-					view.getKeyHandler().handle(KeyHandler.argsOf(m));
-				})
+				.doOnNext(m ->
+					view.getKeyHandler().handle(KeyHandler.argsOf(m)))
 				.subscribe());
 		}
 	}

@@ -72,9 +72,8 @@ public class TaskEventLoopProcessor implements EventLoopProcessor {
 	private Flux<? extends Message<?>> processMouseConsumer(Message<?> message) {
 		return Mono.just(message.getPayload())
 			.ofType(MouseBindingConsumerArgs.class)
-			.flatMap(args -> Mono.fromRunnable(() -> {
-				args.consumer().accept(args.event());
-			}))
+			.flatMap(args -> Mono.fromRunnable(() ->
+				args.consumer().accept(args.event())))
 			.then(Mono.just(MessageBuilder.withPayload(new Object()).build()))
 			.flux();
 	}
@@ -82,9 +81,8 @@ public class TaskEventLoopProcessor implements EventLoopProcessor {
 	private Flux<? extends Message<?>> processKeyConsumer(Message<?> message) {
 		return Mono.just(message.getPayload())
 			.ofType(KeyBindingConsumerArgs.class)
-			.flatMap(args -> Mono.fromRunnable(() -> {
-				args.consumer().accept(args.event());
-			}))
+			.flatMap(args -> Mono.fromRunnable(() ->
+				args.consumer().accept(args.event())))
 			.then(Mono.just(MessageBuilder.withPayload(new Object()).build()))
 			.flux();
 	}

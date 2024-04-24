@@ -95,10 +95,9 @@ public class FunctionCommands {
 			.description("function sample")
 			.group("Function Commands")
 			.withTarget()
-				.consumer(ctx -> {
+				.consumer(ctx ->
 					ctx.getTerminal().writer()
-						.println(String.format("hi, command is '%s'", ctx.getCommandRegistration().getCommand()));
-				})
+						.println(String.format("hi, command is '%s'", ctx.getCommandRegistration().getCommand())))
 				.and()
 			.withOption()
 				.longNames("arg1")

@@ -141,9 +141,8 @@ class MenuViewTests extends AbstractViewTests {
 		void defaultItemCheckStyleIsNoCheck() {
 			MenuItem menuItem = new MenuView.MenuItem("sub1");
 			MenuView view = new MenuView(Arrays.asList(menuItem));
-			assertThat(view.getItems()).allSatisfy(item -> {
-				assertThat(item.getCheckStyle()).isEqualTo(MenuItemCheckStyle.NOCHECK);
-			});
+			assertThat(view.getItems()).allSatisfy(item ->
+				assertThat(item.getCheckStyle()).isEqualTo(MenuItemCheckStyle.NOCHECK));
 		}
 
 	}

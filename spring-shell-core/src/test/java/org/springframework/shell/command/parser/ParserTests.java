@@ -111,10 +111,9 @@ class ParserTests extends AbstractParsingTests {
 			assertThat(result.optionResults()).isNotEmpty();
 			assertThat(result.optionResults().get(0).value()).isEqualTo("x");
 			assertThat(result.messageResults()).isNotEmpty();
-			assertThat(result.messageResults()).satisfiesExactly(ms -> {
+			assertThat(result.messageResults()).satisfiesExactly(ms ->
 				// "2002E:(pos 0): Illegal option value 'x', reason 'Failed to convert from type [java.lang.String] to type [int] for value 'x''"
-				assertThat(ms.getMessage()).contains("Failed to convert");
-			});
+				assertThat(ms.getMessage()).contains("Failed to convert"));
 		}
 	}
 
@@ -126,9 +125,8 @@ class ParserTests extends AbstractParsingTests {
 			register(ROOT4);
 			ParseResult result = parse("root4");
 			assertThat(result).isNotNull();
-			assertThat(result.messageResults()).satisfiesExactly(message -> {
-				ParserAssertions.assertThat(message.parserMessage()).hasCode(2000).hasType(ParserMessage.Type.ERROR);
-			});
+			assertThat(result.messageResults()).satisfiesExactly(message ->
+				ParserAssertions.assertThat(message.parserMessage()).hasCode(2000).hasType(ParserMessage.Type.ERROR));
 			// "100E:(pos 0): Missing option, longnames='arg1', shortnames=''"
 			assertThat(result.messageResults().get(0).getMessage()).contains("Missing mandatory option", "arg1");
 		}
@@ -140,12 +138,10 @@ class ParserTests extends AbstractParsingTests {
 			assertThat(result).isNotNull();
 
 			assertThat(result.messageResults()).satisfiesExactlyInAnyOrder(
-				message -> {
-					ParserAssertions.assertThat(message.parserMessage()).hasCode(2000).hasType(ParserMessage.Type.ERROR);
-				},
-				message -> {
-					ParserAssertions.assertThat(message.parserMessage()).hasCode(2001).hasType(ParserMessage.Type.ERROR);
-				}
+				message ->
+					ParserAssertions.assertThat(message.parserMessage()).hasCode(2000).hasType(ParserMessage.Type.ERROR),
+				message ->
+					ParserAssertions.assertThat(message.parserMessage()).hasCode(2001).hasType(ParserMessage.Type.ERROR)
 			);
 		}
 
@@ -245,9 +241,8 @@ class ParserTests extends AbstractParsingTests {
 			assertThat(result.commandRegistration()).isNotNull();
 			assertThat(result.optionResults()).isNotEmpty();
 			assertThat(result.optionResults()).satisfiesExactly(
-				r -> {
-					assertThat(r.value()).isEqualTo("value1");
-				}
+				r ->
+					assertThat(r.value()).isEqualTo("value1")
 			);
 			assertThat(result.messageResults()).isEmpty();
 		}
@@ -391,9 +386,8 @@ class ParserTests extends AbstractParsingTests {
 			assertThat(result.commandRegistration()).isNotNull();
 			assertThat(result.optionResults()).isNotEmpty();
 			assertThat(result.optionResults()).satisfiesExactly(
-				r -> {
-					assertThat(r.value()).isEqualTo("value1");
-				}
+				r ->
+					assertThat(r.value()).isEqualTo("value1")
 			);
 			assertThat(result.messageResults()).isEmpty();
 		}
@@ -408,9 +402,8 @@ class ParserTests extends AbstractParsingTests {
 			register(ROOT6_OPTION_DEFAULT_VALUE);
 			ParseResult result = parse("root6");
 			assertThat(result.optionResults()).satisfiesExactly(
-				r -> {
-					assertThat(r.value()).isEqualTo("defaultvalue");
-				}
+				r ->
+					assertThat(r.value()).isEqualTo("defaultvalue")
 			);
 		}
 	}
@@ -606,9 +599,8 @@ class ParserTests extends AbstractParsingTests {
 
 			result = parse("root7", "--arg1", "a", "b", "--arg2", "c", "d");
 			assertThat(result.messageResults()).satisfiesExactlyInAnyOrder(
-				message -> {
-					ParserAssertions.assertThat(message.parserMessage()).hasCode(2004).hasType(ParserMessage.Type.ERROR);
-				}
+				message ->
+					ParserAssertions.assertThat(message.parserMessage()).hasCode(2004).hasType(ParserMessage.Type.ERROR)
 			);
 			assertThat(result.argumentResults()).satisfiesExactly(
 				r -> {
